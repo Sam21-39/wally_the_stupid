@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wally_the_stupid/Auth/auth.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 
 class LoginPage extends StatefulWidget {
@@ -39,7 +41,14 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               width: size.width * 0.8,
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () async {
+                  
+                  final auth = Auth.instance;
+                  final result = await auth.signInWithGoogle();
+                  Fluttertoast.showToast(
+                    msg: result.toString(),
+                  );
+                },
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
