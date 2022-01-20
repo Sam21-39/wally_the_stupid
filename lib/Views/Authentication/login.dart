@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wally_the_stupid/Auth/auth.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
+import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -42,11 +43,16 @@ class _LoginPageState extends State<LoginPage> {
               width: size.width * 0.8,
               child: MaterialButton(
                 onPressed: () async {
-                  
                   final auth = Auth.instance;
                   final result = await auth.signInWithGoogle();
                   Fluttertoast.showToast(
                     msg: result.toString(),
+                  );
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => DashBoardPage(),
+                    ),
+                    (route) => false,
                   );
                 },
                 padding: const EdgeInsets.all(8.0),
