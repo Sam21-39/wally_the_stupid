@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "599230240429",
+    "project_id": "wally---the-stupid",
+    "storage_bucket": "wally---the-stupid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599230240429:android:d6dc69169fc7578bcdd824",
+        "android_client_info": {
+          "package_name": "com.sp.sumitofficial.wally_the_stupid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599230240429-06h27iv0847igevq4f2v2dr8bkpmo6mf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sp.sumitofficial.wally_the_stupid",
+            "certificate_hash": "cb573b48c8208a83fe2fee104bda6e09a573ac56"
+          }
+        },
+        {
+          "client_id": "599230240429-9b1vr0mpcs54ar51ieu5217s3mn3praq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4ysIsDLZtQzqHaz3W79OWBxEF3fPbXBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599230240429-9b1vr0mpcs54ar51ieu5217s3mn3praq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
