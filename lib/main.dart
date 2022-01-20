@@ -1,5 +1,5 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 
 void main() {
@@ -51,12 +51,32 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: theme.backgroundColor,
       body: Center(
-        child: Image.asset(
-          'assets/images/wally.png',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/wally.png',
+              height: size.height * 0.16,
+            ),
+            AnimatedTextKit(
+              animatedTexts: [
+                TypewriterAnimatedText(
+                  'The Stupid',
+                  textStyle: UI.appText.copyWith(
+                    fontSize: 36,
+                  ),
+                  speed: const Duration(milliseconds: 400),
+                ),
+              ],
+              totalRepeatCount: 1,
+              pause: const Duration(milliseconds: 800),
+            ),
+          ],
         ),
       ),
     );
