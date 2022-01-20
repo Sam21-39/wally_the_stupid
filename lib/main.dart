@@ -85,11 +85,11 @@ class _SplashState extends State<Splash> {
                   textStyle: UI.appText.copyWith(
                     fontSize: 36,
                   ),
-                  speed: const Duration(milliseconds: 400),
+                  speed: const Duration(milliseconds: 300),
                 ),
               ],
               totalRepeatCount: 1,
-              pause: const Duration(milliseconds: 800),
+              pause: const Duration(milliseconds: 600),
             ),
           ],
         ),

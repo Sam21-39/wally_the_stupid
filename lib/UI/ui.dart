@@ -11,11 +11,6 @@ class UI {
     color: Colors.white,
     fontFamily: 'Nunito',
     fontWeight: FontWeight.w700,
-    fontSize: 18.0,
-    shadows: [
-      Shadow(
-        color: Colors.black.withOpacity(0.75),
-      ),
-    ],
+    fontSize: 20.0,
   );
 }
