@@ -20,24 +20,20 @@ class MyApp extends StatelessWidget {
   }
 
   appLightTheme() => ThemeData(
-        accentColor: UI.appBackDarkColor.withOpacity(0.75),
         appBarTheme: AppBarTheme(
           color: Colors.transparent,
           elevation: 0.0,
         ),
         backgroundColor: UI.appBackColor,
-        buttonColor: UI.appButtonColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       );
 
   appDarkTheme() => ThemeData(
-        accentColor: UI.appBackColor.withOpacity(0.75),
         appBarTheme: AppBarTheme(
           color: Colors.transparent,
           elevation: 0.0,
         ),
         backgroundColor: UI.appBackDarkColor,
-        buttonColor: UI.appButtonColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       );
 }
@@ -54,10 +50,14 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(),
+      backgroundColor: theme.backgroundColor,
       body: Center(
-        child: SvgPicture.asset('assets/images/wally.svg'),
+        child: Image.asset(
+          'assets/images/wally.png',
+        ),
       ),
     );
   }
