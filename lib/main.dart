@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 
 void main() {
@@ -10,21 +11,35 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Wally - The Stupid',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: appLightTheme(),
+      darkTheme: appDarkTheme(),
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
       home: Splash(),
     );
   }
 
   appLightTheme() => ThemeData(
-    accentColor: UI.appBackDarkColor.withOpacity(0.75),
-    appBarTheme: AppBarTheme(
-      color: Colors.transparent,
-      
-    )
-  );
+        accentColor: UI.appBackDarkColor.withOpacity(0.75),
+        appBarTheme: AppBarTheme(
+          color: Colors.transparent,
+          elevation: 0.0,
+        ),
+        backgroundColor: UI.appBackColor,
+        buttonColor: UI.appButtonColor,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      );
+
+  appDarkTheme() => ThemeData(
+        accentColor: UI.appBackColor.withOpacity(0.75),
+        appBarTheme: AppBarTheme(
+          color: Colors.transparent,
+          elevation: 0.0,
+        ),
+        backgroundColor: UI.appBackDarkColor,
+        buttonColor: UI.appButtonColor,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      );
 }
 
 class Splash extends StatefulWidget {
@@ -42,10 +57,7 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
-        ),
+        child: SvgPicture.asset('assets/images/wally.svg'),
       ),
     );
   }
