@@ -162,8 +162,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
         return LeaderboardPage();
       case 3:
         return Container();
-
-      default:
+      case 4:
+        return Container();
     }
     return Container();
   }
@@ -187,9 +187,14 @@ class _DashBoardPageState extends State<DashBoardPage> {
             selectedColor: UI.appHighLightColor,
           ),
           SalomonBottomBarItem(
-            icon: Icon(CupertinoIcons.list_dash),
+            icon: Icon(Icons.leaderboard_outlined),
             title: Text("Leaderboard"),
             selectedColor: UI.appErrorColor,
+          ),
+          SalomonBottomBarItem(
+            icon: Icon(Icons.emoji_events_outlined),
+            title: Text("Achivemnets"),
+            selectedColor: UI.appButtonColor.withBlue(190),
           ),
           SalomonBottomBarItem(
             icon: Icon(CupertinoIcons.settings),

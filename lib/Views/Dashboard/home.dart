@@ -47,19 +47,30 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Stack(
-      children: [
-        isBannerAdReady
-            ? Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: _bannerAd.size.width.toDouble(),
-                  height: _bannerAd.size.height.toDouble(),
-                  child: AdWidget(ad: _bannerAd),
-                ),
-              )
-            : Container(),
-      ],
+    return Container(
+      width: size.width,
+      height: size.height,
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children: [
+                Column(),
+              ],
+            ),
+          ),
+          isBannerAdReady
+              ? Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: _bannerAd.size.width.toDouble(),
+                    height: _bannerAd.size.height.toDouble(),
+                    child: AdWidget(ad: _bannerAd),
+                  ),
+                )
+              : Container(),
+        ],
+      ),
     );
   }
 }
