@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 
 class DashBoardPage extends StatefulWidget {
@@ -14,6 +15,7 @@ class DashBoardPage extends StatefulWidget {
 class _DashBoardPageState extends State<DashBoardPage> {
   final user = FirebaseAuth.instance.currentUser;
   int score = 0;
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -25,8 +27,15 @@ class _DashBoardPageState extends State<DashBoardPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Image.asset(
+          'assets/images/wally.png',
+          height: 50.0,
+        ),
+        centerTitle: true,
+      ),
       backgroundColor: Theme.of(context).backgroundColor,
+      bottomNavigationBar: bottomBar(),
       body: Container(
         width: size.width,
         height: size.height,
@@ -36,6 +45,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
         ),
         child: Column(
           children: [
+            Divider(
+              color: UI.appHighLightColor,
+              thickness: 2.0,
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,7 +86,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                         children: [
                           Icon(
                             CupertinoIcons.star_fill,
-                            color: Colors.white,
+                            color: UI.appIconColor,
                           ),
                           Text(
                             score.toString(),
@@ -106,7 +122,14 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   ),
                 ),
               ],
-            )
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            Divider(
+              color: UI.appHighLightColor,
+              thickness: 2.0,
+            ),
           ],
         ),
       ),
@@ -125,4 +148,35 @@ class _DashBoardPageState extends State<DashBoardPage> {
     score = data['score'];
     setState(() {});
   }
+
+  bottomBar() => SalomonBottomBar(
+        currentIndex: _currentIndex,
+        margin: const EdgeInsets.all(8.0),
+        selectedColorOpacity: 0.15,
+        curve: Curves.fastOutSlowIn,
+        duration: Duration(milliseconds: 300),
+        onTap: (i) => setState(() => _currentIndex = i),
+        items: [
+          SalomonBottomBarItem(
+            icon: Icon(CupertinoIcons.home),
+            title: Text("Home"),
+            selectedColor: UI.appButtonColor.withBlue(180),
+          ),
+          SalomonBottomBarItem(
+            icon: Icon(CupertinoIcons.book),
+            title: Text("Questions"),
+            selectedColor: UI.appHighLightColor,
+          ),
+          SalomonBottomBarItem(
+            icon: Icon(CupertinoIcons.list_dash),
+            title: Text("Leaderboard"),
+            selectedColor: UI.appErrorColor,
+          ),
+          SalomonBottomBarItem(
+            icon: Icon(CupertinoIcons.settings),
+            title: Text("Settings"),
+            selectedColor: UI.appIconColor,
+          ),
+        ],
+      );
 }
