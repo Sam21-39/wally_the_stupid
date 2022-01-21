@@ -3,7 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wally_the_stupid/Auth/auth.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
+import 'package:wally_the_stupid/Views/Authentication/login.dart';
 import 'package:wally_the_stupid/Views/Dashboard/home.dart';
 import 'package:wally_the_stupid/Views/Dashboard/leaderboard.dart';
 
@@ -163,7 +166,24 @@ class _DashBoardPageState extends State<DashBoardPage> {
       case 3:
         return Container();
       case 4:
-        return Container();
+        return Container(
+          child: Center(
+            child: ElevatedButton(
+              onPressed: () async {
+                final auth = Auth.instance;
+                auth.signOut();
+                final sp = await SharedPreferences.getInstance();
+                sp.setBool('isLogged', false);
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
+              },
+              child: Text('Sign Out'),
+            ),
+          ),
+        );
     }
     return Container();
   }
