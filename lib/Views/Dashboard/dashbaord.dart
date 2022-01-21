@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
+import 'package:wally_the_stupid/Views/Dashboard/leaderboard.dart';
 
 class DashBoardPage extends StatefulWidget {
   const DashBoardPage({Key key}) : super(key: key);
@@ -130,6 +131,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
               color: UI.appHighLightColor,
               thickness: 2.0,
             ),
+            Container(
+              height: size.height * 0.58,
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: showContent(),
+            ),
           ],
         ),
       ),
@@ -147,6 +153,22 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
     score = data['score'];
     setState(() {});
+  }
+
+  showContent() {
+    switch (_currentIndex) {
+      case 0:
+        return Container();
+      case 1:
+        return Container();
+      case 2:
+        return LeaderboardPage();
+      case 3:
+        return Container();
+
+      default:
+    }
+    return Container();
   }
 
   bottomBar() => SalomonBottomBar(
