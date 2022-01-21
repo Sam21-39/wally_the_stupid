@@ -6,6 +6,7 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Dashboard/home.dart';
 import 'package:wally_the_stupid/Views/Dashboard/leaderboard.dart';
+import 'package:wally_the_stupid/Views/Dashboard/question.dart';
 
 class DashBoardPage extends StatefulWidget {
   const DashBoardPage({Key? key}) : super(key: key);
@@ -157,7 +158,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
       case 0:
         return HomePage();
       case 1:
-        return Container();
+        return QuestionPage();
       case 2:
         return LeaderboardPage();
       case 3:
