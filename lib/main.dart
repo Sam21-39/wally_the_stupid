@@ -1,7 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Authentication/login.dart';
@@ -10,6 +10,7 @@ import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
+  MobileAds.instance.initialize();
   runApp(MyApp());
 }
 
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
 
 class Splash extends StatefulWidget {
   Splash({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -63,7 +64,7 @@ class _SplashState extends State<Splash> {
     ).then((value) async {
       final sp = await SharedPreferences.getInstance();
 
-      if (sp.getBool('isLogged') != null && sp.getBool('isLogged')) {
+      if (sp.getBool('isLogged') != null && sp.getBool('isLogged') == true) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => DashBoardPage(),

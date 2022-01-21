@@ -4,10 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
+import 'package:wally_the_stupid/Views/Dashboard/home.dart';
 import 'package:wally_the_stupid/Views/Dashboard/leaderboard.dart';
 
 class DashBoardPage extends StatefulWidget {
-  const DashBoardPage({Key key}) : super(key: key);
+  const DashBoardPage({Key? key}) : super(key: key);
 
   @override
   _DashBoardPageState createState() => _DashBoardPageState();
@@ -76,7 +77,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        user.displayName,
+                        user?.displayName ?? '',
                         style: UI.appText.copyWith(fontSize: 22),
                       ),
                       SizedBox(
@@ -105,17 +106,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
                     child: Image.network(
-                      user.photoURL,
+                      user?.photoURL ?? '',
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Center(
                           child: CircularProgressIndicator(
                             valueColor:
                                 AlwaysStoppedAnimation(UI.appHighLightColor),
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
                           ),
                         );
                       },
@@ -145,7 +142,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   void getScores() async {
     final res = await FirebaseFirestore.instance
         .collection('Leaderboard')
-        .where('uid', isEqualTo: user.uid)
+        .where('uid', isEqualTo: user?.uid)
         .get();
     final data = res.docs.first.data();
 
@@ -158,7 +155,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   showContent() {
     switch (_currentIndex) {
       case 0:
-        return Container();
+        return HomePage();
       case 1:
         return Container();
       case 2:

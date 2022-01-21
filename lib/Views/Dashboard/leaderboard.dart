@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 
 class LeaderboardPage extends StatefulWidget {
-  const LeaderboardPage({Key key}) : super(key: key);
+  const LeaderboardPage({Key? key}) : super(key: key);
 
   @override
   _LeaderboardPageState createState() => _LeaderboardPageState();
@@ -56,12 +56,13 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                             builder: (context, snaps) {
                               if (snaps.hasData) {
                                 final data = snaps.data;
+
                                 return Text(
-                                  data['name'],
+                                  (data as DocumentSnapshot<Map>)['name'],
                                   style: UI.appText.copyWith(
                                     color: data['name'] ==
                                             FirebaseAuth.instance.currentUser
-                                                .displayName
+                                                ?.displayName
                                         ? UI.appHighLightColor
                                         : Colors.white,
                                   ),

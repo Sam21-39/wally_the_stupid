@@ -15,13 +15,13 @@ class Auth {
   Future signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
-      final googleAuth = await googleUser.authentication;
+      final googleAuth = await googleUser?.authentication;
       final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-        accessToken: googleAuth.accessToken,
+        idToken: googleAuth?.idToken,
+        accessToken: googleAuth?.accessToken,
       );
       final result = await _auth.signInWithCredential(credential);
-      return result.user.uid;
+      return result.user?.uid;
     } catch (e) {
       print(e.toString());
       return e.toString();

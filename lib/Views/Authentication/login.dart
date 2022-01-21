@@ -6,7 +6,7 @@ import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
