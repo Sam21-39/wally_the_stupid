@@ -111,7 +111,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                         return Center(
                           child: CircularProgressIndicator(
                             valueColor:
-                                AlwaysStoppedAnimation(UI.appBackDarkColor),
+                                AlwaysStoppedAnimation(UI.appHighLightColor),
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
                                     loadingProgress.expectedTotalBytes
@@ -182,7 +182,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           SalomonBottomBarItem(
             icon: Icon(CupertinoIcons.home),
             title: Text("Home"),
-            selectedColor: UI.appButtonColor.withBlue(180),
+            selectedColor: UI.appButtonColor,
           ),
           SalomonBottomBarItem(
             icon: Icon(CupertinoIcons.book),
