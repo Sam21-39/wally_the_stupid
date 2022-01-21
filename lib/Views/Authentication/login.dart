@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/Auth/auth.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
@@ -48,6 +49,8 @@ class _LoginPageState extends State<LoginPage> {
                   Fluttertoast.showToast(
                     msg: result.toString(),
                   );
+                  final sp = await SharedPreferences.getInstance();
+                  sp.setBool('isLogged', true);
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (context) => DashBoardPage(),

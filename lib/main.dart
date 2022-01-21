@@ -1,8 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Authentication/login.dart';
+import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,13 +60,23 @@ class _SplashState extends State<Splash> {
     super.initState();
     Future.delayed(
       Duration(seconds: 6),
-    ).then(
-      (value) => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => LoginPage(),
-        ),
-      ),
-    );
+    ).then((value) async {
+      final sp = await SharedPreferences.getInstance();
+
+      if (sp.getBool('isLogged') != null && sp.getBool('isLogged')) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => DashBoardPage(),
+          ),
+        );
+      } else {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => LoginPage(),
+          ),
+        );
+      }
+    });
   }
 
   @override
