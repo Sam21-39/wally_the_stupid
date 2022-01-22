@@ -32,112 +32,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          'assets/images/wally.png',
-          height: 50.0,
-        ),
-        centerTitle: true,
-      ),
       backgroundColor: Theme.of(context).backgroundColor,
       bottomNavigationBar: bottomBar(),
       body: Container(
         width: size.width,
         height: size.height,
         padding: const EdgeInsets.symmetric(
-          vertical: 8.0,
+          vertical: 16.0,
           horizontal: 16.0,
         ),
-        child: Column(
-          children: [
-            Divider(
-              color: UI.appHighLightColor,
-              thickness: 2.0,
-            ),
-            SizedBox(
-              height: size.height * 0.01,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  width: size.width * 0.4,
-                  decoration: BoxDecoration(
-                    color: UI.appButtonColor,
-                    borderRadius: BorderRadius.circular(12.0),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 5,
-                        spreadRadius: 2,
-                        offset: Offset(0.9, 0.1),
-                        color: Colors.black.withOpacity(0.25),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        user?.displayName ?? '',
-                        style: UI.appText.copyWith(fontSize: 22),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.01,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            CupertinoIcons.star_fill,
-                            color: UI.appIconColor,
-                          ),
-                          Text(
-                            score.toString(),
-                            style: UI.appText.copyWith(fontSize: 20),
-                            softWrap: true,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                CircleAvatar(
-                  radius: 60.0,
-                  backgroundColor: UI.appButtonColor,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image.network(
-                      user?.photoURL ?? '',
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation(UI.appHighLightColor),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: size.height * 0.01,
-            ),
-            Divider(
-              color: UI.appHighLightColor,
-              thickness: 2.0,
-            ),
-            Container(
-              height: size.height * 0.58,
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: showContent(),
-            ),
-          ],
-        ),
+        child: showContent(),
       ),
     );
   }

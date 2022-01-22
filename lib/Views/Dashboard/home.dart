@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wally_the_stupid/Ads/Adhelper.dart';
+import 'package:wally_the_stupid/UI/ui.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,6 +16,8 @@ class _HomePageState extends State<HomePage> {
   late BannerAd _bannerAd;
 
   bool isBannerAdReady = false;
+  final user = FirebaseAuth.instance.currentUser;
+  int score = 0;
 
   @override
   void initState() {
@@ -55,7 +60,93 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: ListView(
               children: [
-                Column(),
+                Column(
+                  children: [
+                    Divider(
+                      color: UI.appHighLightColor,
+                      thickness: 2.0,
+                    ),
+                    SizedBox(
+                      height: size.height * 0.01,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          width: size.width * 0.4,
+                          decoration: BoxDecoration(
+                            color: UI.appButtonColor,
+                            borderRadius: BorderRadius.circular(12.0),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5,
+                                spreadRadius: 2,
+                                offset: Offset(0.9, 0.1),
+                                color: Colors.black.withOpacity(0.25),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                user?.displayName ?? '',
+                                style: UI.appText.copyWith(fontSize: 22),
+                              ),
+                              SizedBox(
+                                height: size.height * 0.01,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Icon(
+                                    CupertinoIcons.star_fill,
+                                    color: UI.appIconColor,
+                                  ),
+                                  Text(
+                                    score.toString(),
+                                    style: UI.appText.copyWith(fontSize: 20),
+                                    softWrap: true,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        CircleAvatar(
+                          radius: 60.0,
+                          backgroundColor: UI.appButtonColor,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network(
+                              user?.photoURL ?? '',
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation(
+                                        UI.appHighLightColor),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * 0.01,
+                    ),
+                    Divider(
+                      color: UI.appHighLightColor,
+                      thickness: 2.0,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
