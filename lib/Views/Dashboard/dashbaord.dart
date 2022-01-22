@@ -18,15 +18,7 @@ class DashBoardPage extends StatefulWidget {
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
-  final user = FirebaseAuth.instance.currentUser;
-  int score = 0;
   int _currentIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    getScores();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,19 +36,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
         child: showContent(),
       ),
     );
-  }
-
-  void getScores() async {
-    final res = await FirebaseFirestore.instance
-        .collection('Leaderboard')
-        .where('uid', isEqualTo: user?.uid)
-        .get();
-    final data = res.docs.first.data();
-
-    // print(data['score']);
-
-    score = data['score'];
-    setState(() {});
   }
 
   showContent() {
@@ -107,7 +86,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
           SalomonBottomBarItem(
             icon: Icon(CupertinoIcons.book),
-            title: Text("Questions"),
+            title: Text("Challenges"),
             selectedColor: UI.appHighLightColor,
           ),
           SalomonBottomBarItem(
