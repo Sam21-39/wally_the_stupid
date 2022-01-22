@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Sign In With Google \nand \nJoin The Stupid Gang!!!',
+              'Sign In \nand \nDo more Challenges!!!',
               style: UI.appText.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w800,

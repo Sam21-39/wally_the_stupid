@@ -15,6 +15,7 @@ dependencies:
 
   cupertino_icons: ^1.0.4
   animated_text_kit: ^4.2.1
+  feature_discovery: ^0.14.1
 
   shared_preferences: ^2.0.12
   url_launcher: ^6.0.18

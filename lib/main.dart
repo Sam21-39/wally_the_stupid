@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Authentication/login.dart';
 import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
+import 'package:feature_discovery/feature_discovery.dart';
+import 'package:wally_the_stupid/Views/Guide/guide.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,13 +19,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wally - The Stupid',
-      theme: appLightTheme(),
-      darkTheme: appDarkTheme(),
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
-      home: Splash(),
+    return FeatureDiscovery(
+      child: MaterialApp(
+        title: 'Wally - The Stupid',
+        theme: appLightTheme(),
+        darkTheme: appDarkTheme(),
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.system,
+        home: Splash(),
+      ),
     );
   }
 
@@ -64,7 +68,13 @@ class _SplashState extends State<Splash> {
     ).then((value) async {
       final sp = await SharedPreferences.getInstance();
 
-      if (sp.getBool('isLogged') != null && sp.getBool('isLogged') == true) {
+      if (sp.getBool('isLogged') == null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => GuidePage(),
+          ),
+        );
+      } else if (sp.getBool('isLogged') == true) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => DashBoardPage(),
