@@ -152,17 +152,23 @@ class _HomePageState extends State<HomePage> {
                       child: StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection('Challenges')
-                            .where(
-                              'isActive',
-                              isEqualTo: true,
+                            .orderBy(
+                              'timestamp',
+                              descending: true,
                             )
                             .snapshots(),
                         builder: (context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
                             final data = snapshot.data.docs;
                             //print(data[0]['prompt']);
+                            final dataList = [];
+                            data.forEach((e) {
+                              if (e['isActive']) {
+                                dataList.add(e);
+                              }
+                            });
                             return ListView.builder(
-                              itemCount: data.length,
+                              itemCount: dataList.length,
                               itemBuilder: (context, index) => Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -187,12 +193,15 @@ class _HomePageState extends State<HomePage> {
                                         '${index + 1}.',
                                         style: UI.appText,
                                       ),
-                                      Text(
-                                        data[index]['prompt'],
-                                        style: UI.appText,
+                                      SizedBox(
+                                        width: size.width * 0.45,
+                                        child: Text(
+                                          dataList[index]['prompt'],
+                                          style: UI.appText,
+                                        ),
                                       ),
                                       Text(
-                                        '(${data[index]['score'].toString()})',
+                                        '(${dataList[index]['score'].toString()})',
                                         style: UI.appText,
                                       ),
                                     ],
