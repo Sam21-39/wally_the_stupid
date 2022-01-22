@@ -43,12 +43,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
       case 0:
         return HomePage();
       case 1:
-        return Container();
-      case 2:
         return LeaderboardPage();
-      case 3:
+      case 2:
         return Container();
-      case 4:
+      case 3:
         return Container(
           child: Center(
             child: ElevatedButton(
@@ -85,11 +83,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
             selectedColor: UI.appButtonColor,
           ),
           SalomonBottomBarItem(
-            icon: Icon(CupertinoIcons.book),
-            title: Text("Challenges"),
-            selectedColor: UI.appHighLightColor,
-          ),
-          SalomonBottomBarItem(
             icon: Icon(Icons.leaderboard_outlined),
             title: Text("Leaderboard"),
             selectedColor: UI.appErrorColor,
@@ -97,7 +90,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           SalomonBottomBarItem(
             icon: Icon(Icons.emoji_events_outlined),
             title: Text("Achivemnets"),
-            selectedColor: UI.appButtonColor.withBlue(190),
+            selectedColor: UI.appHighLightColor,
           ),
           SalomonBottomBarItem(
             icon: Icon(CupertinoIcons.settings),
