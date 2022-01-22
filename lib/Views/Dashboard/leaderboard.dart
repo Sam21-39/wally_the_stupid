@@ -21,12 +21,27 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         SizedBox(
           height: size.height * 0.02,
         ),
-        Text(
-          'LeaderBoard',
-          style: UI.appText.copyWith(
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 5,
+                spreadRadius: 2.5,
+                color: Colors.black12,
+                offset: Offset(0.9, 0.9),
+              )
+            ],
+            borderRadius: BorderRadius.circular(12.0),
             color: UI.appErrorColor,
-            decoration: TextDecoration.underline,
-            fontSize: 24.0,
+          ),
+          child: Text(
+            'LeaderBoard',
+            style: UI.appText.copyWith(
+              color: Colors.white,
+              decoration: TextDecoration.underline,
+              fontSize: 24.0,
+            ),
           ),
         ),
         SizedBox(
