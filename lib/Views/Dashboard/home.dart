@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -145,8 +146,66 @@ class _HomePageState extends State<HomePage> {
                       color: UI.appHighLightColor,
                       thickness: 2.0,
                     ),
-
-                    
+                    Container(
+                      // color: UI.appButtonColor.withOpacity(0.25),
+                      height: size.height * 0.55,
+                      child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('Challenges')
+                            .where(
+                              'isActive',
+                              isEqualTo: true,
+                            )
+                            .snapshots(),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            final data = snapshot.data.docs;
+                            //print(data[0]['prompt']);
+                            return ListView.builder(
+                              itemCount: data.length,
+                              itemBuilder: (context, index) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 5,
+                                        spreadRadius: 2.5,
+                                        color: Colors.black12,
+                                        offset: Offset(0.9, 0.9),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    color: UI.appButtonColor,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        '${index + 1}.',
+                                        style: UI.appText,
+                                      ),
+                                      Text(
+                                        data[index]['prompt'],
+                                        style: UI.appText,
+                                      ),
+                                      Text(
+                                        '(${data[index]['score'].toString()})',
+                                        style: UI.appText,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        },
+                      ),
+                    )
                   ],
                 ),
               ],
