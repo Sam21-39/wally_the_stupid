@@ -41,6 +41,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599230240429:android:662d837f97dffa63cdd824",
+        "android_client_info": {
+          "package_name": "in.appa_mania.wally_the_stupid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599230240429-9b1vr0mpcs54ar51ieu5217s3mn3praq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4ysIsDLZtQzqHaz3W79OWBxEF3fPbXBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599230240429-9b1vr0mpcs54ar51ieu5217s3mn3praq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
