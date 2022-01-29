@@ -87,7 +87,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                 child: FutureBuilder(
                                     future: FirebaseFirestore.instance
                                         .collection('User')
-                                        .doc(leaderList[index]['uid'])
+                                        .doc(leaderList[index].id)
                                         .get(),
                                     builder: (context, snaps) {
                                       if (snaps.hasData) {
@@ -119,7 +119,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                     }),
                               ),
                               Text(
-                                leaderList[index]['score'].toString(),
+                                '${leaderList[index]['time']} sec',
                                 style: UI.appText,
                               ),
                             ],

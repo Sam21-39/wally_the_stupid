@@ -18,11 +18,12 @@ class _HomePageState extends State<HomePage> {
 
   bool isBannerAdReady = false;
   final user = FirebaseAuth.instance.currentUser;
-  int score = 0;
+  num time = 0;
 
   @override
   void initState() {
     super.initState();
+    getTimeFromLeaderBoard();
     _bannerAd = BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
       request: AdRequest(),
@@ -108,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                                     color: UI.appIconColor,
                                   ),
                                   Text(
-                                    score.toString(),
+                                    '$time sec',
                                     style: UI.appText.copyWith(fontSize: 20),
                                     softWrap: true,
                                   ),
@@ -229,5 +230,18 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  getTimeFromLeaderBoard() async {
+    final data = await FirebaseFirestore.instance
+        .collection("Leaderboard")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get();
+
+    final lead = data.data();
+
+    //print((lead as Map)['time']);
+    time = (lead as Map)['time'];
+    setState(() {});
   }
 }
