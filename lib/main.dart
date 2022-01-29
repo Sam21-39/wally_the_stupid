@@ -18,11 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await MobileAds.instance.initialize();
-  final androidInfo = await DeviceInfoPlugin().androidInfo;
-  final isAndroidOld = (androidInfo.version.sdkInt ?? 0) < 29; //Android 10
-  isAndroidOld
-      ? await PlatformViewsService.synchronizeToNativeViewHierarchy(false)
-      : await PlatformViewsService.synchronizeToNativeViewHierarchy(true);
+  await PlatformViewsService.synchronizeToNativeViewHierarchy(false);
   runApp(MyApp());
 }
 

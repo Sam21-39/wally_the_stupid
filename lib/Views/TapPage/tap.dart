@@ -93,27 +93,30 @@ class _TapPageState extends State<TapPage> {
                   height: size.height * 0.05,
                 ),
                 MaterialButton(
+                  disabledColor: UI.appButtonColor.withOpacity(0.45),
                   minWidth: size.width * 0.8,
-                  onPressed: () async {
-                    final db = DataHandler.dataInstance;
-                    timer.cancel();
-                    final result = await db.addAnswer(
-                      time,
-                      (widget.challenge?.qid as String),
-                      merge: true,
-                    );
-                    if (result.contains('error') ||
-                        result.contains('exeception') ||
-                        result.contains('accessToken != null') ||
-                        result.contains('idToken != null')) {
-                      Fluttertoast.showToast(
-                        msg: 'Some error occured. Try again later',
-                      );
-                    } else {
-                      db.updateLeaderBoard();
-                      Get.offAll(DashBoardPage());
-                    }
-                  },
+                  onPressed: widget.challenge?.answer == no
+                      ? () async {
+                          final db = DataHandler.dataInstance;
+                          timer.cancel();
+                          final result = await db.addAnswer(
+                            time,
+                            (widget.challenge?.qid as String),
+                            merge: true,
+                          );
+                          if (result.contains('error') ||
+                              result.contains('exeception') ||
+                              result.contains('accessToken != null') ||
+                              result.contains('idToken != null')) {
+                            Fluttertoast.showToast(
+                              msg: 'Some error occured. Try again later',
+                            );
+                          } else {
+                            db.updateLeaderBoard();
+                            Get.offAll(DashBoardPage());
+                          }
+                        }
+                      : null,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
