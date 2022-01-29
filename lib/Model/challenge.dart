@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Challenge {
-  final String? prompt;
-  final num? start;
-  final num? answer;
-  final bool? isActive;
-  final Timestamp? timestamp;
+  String? prompt;
+  num? start;
+  num? answer;
+  bool? isActive;
+  Timestamp? timestamp;
 
   Challenge({
     this.prompt,

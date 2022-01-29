@@ -25,12 +25,14 @@ dependencies:
   salomon_bottom_bar: ^3.2.0
   google_mobile_ads: ^1.0.1
 
+
   firebase_core: ^1.11.0
   firebase_auth: ^3.3.5
   google_sign_in: ^5.2.3
   firebase_storage: ^10.2.5
   cloud_firestore: ^3.1.6
-
+  get: ^4.6.1
+  
 
 dev_dependencies:
   flutter_test:

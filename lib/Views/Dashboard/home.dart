@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wally_the_stupid/Ads/Adhelper.dart';
+import 'package:wally_the_stupid/Model/challenge.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
+import 'package:wally_the_stupid/Views/TapPage/tap.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -162,46 +164,64 @@ class _HomePageState extends State<HomePage> {
                           if (snapshot.hasData) {
                             final data = snapshot.data.docs;
                             //print(data[0]['prompt']);
-                            final dataList = [];
+
+                            final List<Challenge> dataList = [];
                             data.forEach((e) {
                               if (e['isActive']) {
-                                dataList.add(e);
+                                var challenge = Challenge();
+                                challenge.prompt = e['prompt'];
+                                challenge.answer = e['answer'];
+                                challenge.isActive = e['isActive'];
+                                challenge.start = e['start'];
+                                challenge.timestamp = e['timestamp'];
+                                dataList.add(challenge);
                               }
                             });
                             return ListView.builder(
                               itemCount: dataList.length,
                               itemBuilder: (context, index) => Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 5,
-                                        spreadRadius: 2.5,
-                                        color: Colors.black12,
-                                        offset: Offset(0.9, 0.9),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    color: UI.appButtonColor,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(
-                                        '${index + 1}.',
-                                        style: UI.appText,
-                                      ),
-                                      SizedBox(
-                                        width: size.width * 0.6,
-                                        child: Text(
-                                          dataList[index]['prompt'],
-                                          style: UI.appText,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => TapPage(
+                                          challenge: dataList[index],
                                         ),
                                       ),
-                                    ],
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 5,
+                                          spreadRadius: 2.5,
+                                          color: Colors.black12,
+                                          offset: Offset(0.9, 0.9),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      color: UI.appButtonColor,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(
+                                          '${index + 1}.',
+                                          style: UI.appText,
+                                        ),
+                                        SizedBox(
+                                          width: size.width * 0.6,
+                                          child: Text(
+                                            dataList[index].prompt!,
+                                            style: UI.appText,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
