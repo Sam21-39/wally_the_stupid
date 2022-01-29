@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/Auth/auth.dart';
+import 'package:wally_the_stupid/Database/dataHandler.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Authentication/login.dart';
 import 'package:wally_the_stupid/Views/Dashboard/home.dart';
@@ -19,6 +20,13 @@ class DashBoardPage extends StatefulWidget {
 
 class _DashBoardPageState extends State<DashBoardPage> {
   int _currentIndex = 0;
+  final db = DataHandler.dataInstance;
+
+  @override
+  void initState() {
+    db.updateLeaderBoard();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

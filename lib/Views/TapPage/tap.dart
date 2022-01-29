@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:wally_the_stupid/Database/dataHandler.dart';
 import 'package:wally_the_stupid/Model/challenge.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
+import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 
 class TapPage extends StatefulWidget {
   final Challenge? challenge;
@@ -99,6 +100,7 @@ class _TapPageState extends State<TapPage> {
                     final result = await db.addAnswer(
                       time,
                       (widget.challenge?.qid as String),
+                      merge: true,
                     );
                     if (result.contains('error') ||
                         result.contains('exeception') ||
@@ -109,7 +111,7 @@ class _TapPageState extends State<TapPage> {
                       );
                     } else {
                       db.updateLeaderBoard();
-                      Get.back();
+                      Get.offAll(DashBoardPage());
                     }
                   },
                   child: Padding(

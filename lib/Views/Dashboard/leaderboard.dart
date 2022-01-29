@@ -51,6 +51,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
           child: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection('Leaderboard')
+                .orderBy('time')
                 .snapshots(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
