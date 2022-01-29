@@ -66,8 +66,6 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: ListView(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
               children: [
                 Column(
                   children: [
@@ -184,6 +182,8 @@ class _HomePageState extends State<HomePage> {
                               }
                             });
                             return ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
                               itemCount: dataList.length,
                               itemBuilder: (context, index) => Padding(
                                 padding: const EdgeInsets.all(8.0),
