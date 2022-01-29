@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wally_the_stupid/Ads/Adhelper.dart';
+import 'package:wally_the_stupid/Database/dataHandler.dart';
 import 'package:wally_the_stupid/Model/challenge.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/TapPage/tap.dart';
@@ -22,11 +23,14 @@ class _HomePageState extends State<HomePage> {
   bool isBannerAdReady = false;
   final user = FirebaseAuth.instance.currentUser;
   num time = 0;
+  final db = DataHandler.dataInstance;
 
   @override
   void initState() {
     super.initState();
+
     getTimeFromLeaderBoard();
+    // getTestData();
     _bannerAd = BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
       request: AdRequest(),
@@ -263,4 +267,9 @@ class _HomePageState extends State<HomePage> {
     time = (lead as Map)['time'];
     setState(() {});
   }
+
+  // getTestData() async {
+  //   final data = await db.getBestTime();
+  //   print('test data --> $data');
+  // }
 }
