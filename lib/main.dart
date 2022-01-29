@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +18,23 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   MobileAds.instance.initialize();
+  platformServiceManger();
   runApp(MyApp());
+}
+
+void platformServiceManger() async {
+  if (Platform.isAndroid) {
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    final isAndroidOld = (androidInfo.version.sdkInt ?? 0) < 29; //Android 10
+// final useHybridComposition = anroidInfo.remoteConfig.getBool(
+//   isAndroidOld
+//       ? RemoteConfigKey.useHybridCompositionOlderOS
+//       : RemoteConfigKey.useHybridCompositionNewerOS,
+// );
+    if (isAndroidOld) {
+      await PlatformViewsService.synchronizeToNativeViewHierarchy(false);
+    }
+  }
 }
 
 class MyApp extends StatelessWidget {
