@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Challenge {
+  String? qid;
   String? prompt;
   num? start;
   num? answer;
@@ -8,6 +9,7 @@ class Challenge {
   Timestamp? timestamp;
 
   Challenge({
+    this.qid,
     this.prompt,
     this.start,
     this.answer,

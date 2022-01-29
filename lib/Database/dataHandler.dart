@@ -58,8 +58,10 @@ class DataHandler {
         },
         SetOptions(merge: merge),
       );
+      return 'done';
     } catch (e) {
       print(e.toString());
+      return e.toString();
     }
   }
 
@@ -71,7 +73,7 @@ class DataHandler {
           .get();
 
       final resultList = (result.data() as Map)['challenges'];
-      var time = 999999;
+      var time = 9999999;
       for (var item in resultList) {
         if (item['time'] < time) time = item['time'];
       }

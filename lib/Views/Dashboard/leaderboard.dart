@@ -119,7 +119,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                     }),
                               ),
                               Text(
-                                '${leaderList[index]['time']} sec',
+                                '${leaderList[index]['time'] == 9999999 ? 'infinite' : leaderList[index]['time']} sec',
                                 style: UI.appText,
                               ),
                             ],

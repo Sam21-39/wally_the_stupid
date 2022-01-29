@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:wally_the_stupid/Database/dataHandler.dart';
 import 'package:wally_the_stupid/Model/challenge.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 
@@ -91,13 +93,24 @@ class _TapPageState extends State<TapPage> {
                 ),
                 MaterialButton(
                   minWidth: size.width * 0.8,
-                  onPressed: () {
+                  onPressed: () async {
+                    final db = DataHandler.dataInstance;
                     timer.cancel();
-                    Future.delayed(
-                      Duration(seconds: 1),
-                    ).then(
-                      (value) => Get.back(),
+                    final result = await db.addAnswer(
+                      time,
+                      (widget.challenge?.qid as String),
                     );
+                    if (result.contains('error') ||
+                        result.contains('exeception') ||
+                        result.contains('accessToken != null') ||
+                        result.contains('idToken != null')) {
+                      Fluttertoast.showToast(
+                        msg: 'Some error occured. Try again later',
+                      );
+                    } else {
+                      db.updateLeaderBoard();
+                      Get.back();
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

@@ -23,8 +23,7 @@ class _HomePageState extends State<HomePage> {
   bool isBannerAdReady = false;
   final user = FirebaseAuth.instance.currentUser;
   num time = 0;
-  final db = DataHandler.dataInstance;
-
+  // final db = DataHandler.dataInstance;
   @override
   void initState() {
     super.initState();
@@ -174,6 +173,7 @@ class _HomePageState extends State<HomePage> {
                             data.forEach((e) {
                               if (e['isActive']) {
                                 var challenge = Challenge();
+                                challenge.qid = e.id;
                                 challenge.prompt = e['prompt'];
                                 challenge.answer = e['answer'];
                                 challenge.isActive = e['isActive'];
@@ -261,10 +261,10 @@ class _HomePageState extends State<HomePage> {
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .get();
 
-    final lead = data.data();
+    final lead = (data.data() as Map)['time'];
 
     //print((lead as Map)['time']);
-    time = (lead as Map)['time'];
+    if (lead != 9999999) time = lead;
     setState(() {});
   }
 

@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/Auth/auth.dart';
+import 'package:wally_the_stupid/Database/dataHandler.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 
@@ -46,17 +47,27 @@ class _LoginPageState extends State<LoginPage> {
               child: MaterialButton(
                 onPressed: () async {
                   final auth = Auth.instance;
+                  final db = DataHandler.dataInstance;
                   final result = await auth.signInWithGoogle();
-                  Fluttertoast.showToast(
-                    msg: result.toString(),
-                  );
-                  final sp = await SharedPreferences.getInstance();
-                  sp.setBool('isLogged', true);
-                  Get.offUntil(
+
+                  if (result.contains('error') ||
+                      result.contains('exeception') ||
+                      result.contains('accessToken != null') ||
+                      result.contains('idToken != null')) {
+                    Fluttertoast.showToast(
+                      msg: 'Some error occured. Try again later',
+                    );
+                  } else {
+                    final sp = await SharedPreferences.getInstance();
+                    sp.setBool('isLogged', true);
+                    db.initiateUserCreation();
+                    Get.offUntil(
                       MaterialPageRoute(
                         builder: (context) => DashBoardPage(),
                       ),
-                      (route) => false);
+                      (route) => false,
+                    );
+                  }
                 },
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
