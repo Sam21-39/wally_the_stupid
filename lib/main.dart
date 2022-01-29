@@ -14,27 +14,16 @@ import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:wally_the_stupid/Views/Guide/guide.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
-  MobileAds.instance.initialize();
-  platformServiceManger();
+  await Firebase.initializeApp();
+  await MobileAds.instance.initialize();
+  final androidInfo = await DeviceInfoPlugin().androidInfo;
+  final isAndroidOld = (androidInfo.version.sdkInt ?? 0) < 29; //Android 10
+  isAndroidOld
+      ? await PlatformViewsService.synchronizeToNativeViewHierarchy(false)
+      : await PlatformViewsService.synchronizeToNativeViewHierarchy(true);
   runApp(MyApp());
-}
-
-void platformServiceManger() async {
-  if (Platform.isAndroid) {
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    final isAndroidOld = (androidInfo.version.sdkInt ?? 0) < 29; //Android 10
-// final useHybridComposition = anroidInfo.remoteConfig.getBool(
-//   isAndroidOld
-//       ? RemoteConfigKey.useHybridCompositionOlderOS
-//       : RemoteConfigKey.useHybridCompositionNewerOS,
-// );
-    if (isAndroidOld) {
-      await PlatformViewsService.synchronizeToNativeViewHierarchy(false);
-    }
-  }
 }
 
 class MyApp extends StatelessWidget {
