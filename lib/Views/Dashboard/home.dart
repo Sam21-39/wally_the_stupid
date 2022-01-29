@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Icon(
-                                    CupertinoIcons.star_fill,
+                                    CupertinoIcons.timer,
                                     color: UI.appIconColor,
                                   ),
                                   Text(
@@ -194,15 +194,11 @@ class _HomePageState extends State<HomePage> {
                                         style: UI.appText,
                                       ),
                                       SizedBox(
-                                        width: size.width * 0.45,
+                                        width: size.width * 0.6,
                                         child: Text(
                                           dataList[index]['prompt'],
                                           style: UI.appText,
                                         ),
-                                      ),
-                                      Text(
-                                        '(${dataList[index]['score'].toString()})',
-                                        style: UI.appText,
                                       ),
                                     ],
                                   ),
@@ -210,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             );
                           } else {
-                            return CircularProgressIndicator();
+                            return Center(child: CircularProgressIndicator());
                           }
                         },
                       ),
