@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/Auth/auth.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
@@ -51,12 +52,11 @@ class _LoginPageState extends State<LoginPage> {
                   );
                   final sp = await SharedPreferences.getInstance();
                   sp.setBool('isLogged', true);
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => DashBoardPage(),
-                    ),
-                    (route) => false,
-                  );
+                  Get.offUntil(
+                      MaterialPageRoute(
+                        builder: (context) => DashBoardPage(),
+                      ),
+                      (route) => false);
                 },
                 padding: const EdgeInsets.all(8.0),
                 child: Row(

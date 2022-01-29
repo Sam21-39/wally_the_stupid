@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FeatureDiscovery(
-      child: MaterialApp(
+      child: GetMaterialApp(
         title: 'Wally - The Stupid',
         theme: appLightTheme(),
         darkTheme: appDarkTheme(),
@@ -69,23 +70,11 @@ class _SplashState extends State<Splash> {
       final sp = await SharedPreferences.getInstance();
 
       if (sp.getBool('isLogged') == null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => GuidePage(),
-          ),
-        );
+        Get.off(() => GuidePage());
       } else if (sp.getBool('isLogged') == true) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => DashBoardPage(),
-          ),
-        );
+        Get.off(() => DashBoardPage());
       } else {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => LoginPage(),
-          ),
-        );
+        Get.off(() => LoginPage());
       }
     });
   }
