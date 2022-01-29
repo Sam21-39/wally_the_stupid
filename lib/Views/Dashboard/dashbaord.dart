@@ -45,7 +45,15 @@ class _DashBoardPageState extends State<DashBoardPage> {
       case 1:
         return LeaderboardPage();
       case 2:
-        return Container();
+        return Container(
+          child: Center(
+            child: Icon(
+              Icons.lock,
+              color: UI.appHighLightColor.withOpacity(0.55),
+              size: MediaQuery.of(context).size.width * 0.35,
+            ),
+          ),
+        );
       case 3:
         return Container(
           child: Center(
