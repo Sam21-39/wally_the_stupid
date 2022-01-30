@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:wally_the_stupid/Auth/auth.dart';
+import 'package:wally_the_stupid/Database/staticData.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
+import 'package:wally_the_stupid/Views/Authentication/login.dart';
 import 'package:wally_the_stupid/Views/Dashboard/about.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -64,9 +69,12 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: size.height * 0.01,
             ),
-            Text(
-              'Privacy Policy',
-              style: UI.appText,
+            GestureDetector(
+              onTap: launchURL,
+              child: Text(
+                'Privacy Policy',
+                style: UI.appText,
+              ),
             ),
             SizedBox(
               height: size.height * 0.01,
@@ -77,9 +85,28 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: size.height * 0.01,
             ),
-            Text(
-              'Sign Out',
-              style: UI.appText,
+            GestureDetector(
+              onTap: launchContactURL,
+              child: Text(
+                'Contact Us',
+                style: UI.appText,
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            Divider(
+              color: UI.appIconColor,
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            GestureDetector(
+              onTap: onPressed,
+              child: Text(
+                'Sign Out',
+                style: UI.appText,
+              ),
             ),
             SizedBox(
               height: size.height * 0.01,
@@ -95,17 +122,25 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
+
+  void launchURL() async {
+    if (!await launch(StaticData.privacyURL))
+      print('Could not launch ${StaticData.privacyURL}');
+  }
+
+  void launchContactURL() async {
+    if (!await launch(StaticData.emailLaunchUri.toString()))
+      print('Could not launch ${StaticData.emailLaunchUri.toString()}');
+  }
+
+  void onPressed() async {
+    final auth = Auth.instance;
+    auth.signOut();
+    final sp = await SharedPreferences.getInstance();
+    sp.setBool('isLogged', false);
+    Get.offAll(
+      LoginPage(),
+      predicate: (route) => false,
+    );
+  }
 }
-
-
-// onPressed: () async {
-//                 final auth = Auth.instance;
-//                 auth.signOut();
-//                 final sp = await SharedPreferences.getInstance();
-//                 sp.setBool('isLogged', false);
-//                 Navigator.of(context).pushReplacement(
-//                   MaterialPageRoute(
-//                     builder: (context) => LoginPage(),
-//                   ),
-//                 );
-//               },

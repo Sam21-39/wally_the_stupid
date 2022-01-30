@@ -12,4 +12,21 @@ The app is simply for fun without any purpose. It has a ranking system but it's 
   static final String appCopywrit = '''
   ~ © Appamania, Jan'22
   ''';
+
+  static final String privacyURL =
+      'https://www.termsfeed.com/live/ba2c5794-5a26-42c2-9273-eaf1248c4f66';
+
+  static String? _encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((e) =>
+            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
+  static final Uri emailLaunchUri = Uri(
+    scheme: 'mailto',
+    path: 'sp.appamania24@gmail.com',
+    query: _encodeQueryParameters(
+        <String, String>{'subject': 'Example Subject & Symbols are allowed!'}),
+  );
 }

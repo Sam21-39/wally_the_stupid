@@ -113,7 +113,10 @@ class _TapPageState extends State<TapPage> {
                             );
                           } else {
                             db.updateLeaderBoard();
-                            Get.offAll(DashBoardPage());
+                            Get.offAll(
+                              DashBoardPage(),
+                              predicate: (route) => false,
+                            );
                           }
                         }
                       : null,
