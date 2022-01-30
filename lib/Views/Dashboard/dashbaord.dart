@@ -22,6 +22,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   void initState() {
+    getDeviceInfo();
     db.updateLeaderBoard();
     super.initState();
   }
