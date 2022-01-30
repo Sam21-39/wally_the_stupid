@@ -44,108 +44,110 @@ class _GuidePageState extends State<GuidePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return GestureDetector(
-      onDoubleTap: () => setState(() => no > 0 ? no -= 2 : null),
-      onTap: () => setState(() => no > 0 ? no += 1 : null),
-      child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: Container(
-          width: size.width,
-          height: size.height,
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: size.height * 0.1,
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: Container(
+        width: size.width,
+        height: size.height,
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            SizedBox(
+              height: size.height * 0.1,
+            ),
+            Text(
+              'Let\'s try to make the no. to 0 by tapping the screen',
+              style: UI.appText.copyWith(
+                fontSize: 30.0,
+                fontWeight: FontWeight.w900,
               ),
-              Text(
-                'Let\'s try to make the no. to 0 by tapping the screen',
-                style: UI.appText.copyWith(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.w900,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: size.height * 0.1,
+            ),
+            Text(
+              no.toString(),
+              style: UI.appText.copyWith(
+                fontSize: 64.0,
+                fontWeight: FontWeight.w900,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: size.height * 0.2,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DescribedFeatureOverlay(
+                  barrierDismissible: false,
+                  backgroundDismissible: false,
+                  featureId: 'single_tap_id',
+                  title: Text('Single Tap'),
+                  description: Text('Tap once to increase the no. by 1'),
+                  backgroundColor: UI.appErrorColor,
+                  targetColor: Colors.white,
+                  textColor: Colors.white,
+                  contentLocation: ContentLocation.below,
+                  pulseDuration: Duration(seconds: 1),
+                  tapTarget: GestureDetector(
+                    onTap: () async {
+                      no < 6 ? setState(() => no += 1) : null;
+                      await FeatureDiscovery.completeCurrentStep(context);
+                    },
+                  ),
+                  child: Container(),
                 ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: size.height * 0.1,
-              ),
-              Text(
-                no.toString(),
-                style: UI.appText.copyWith(
-                  fontSize: 64.0,
-                  fontWeight: FontWeight.w900,
+                DescribedFeatureOverlay(
+                  backgroundDismissible: false,
+                  barrierDismissible: false,
+                  featureId: 'double_tap_id',
+                  title: Text('Double Tap'),
+                  description: Text('Tap Twice to decrease the no. by 2'),
+                  backgroundColor: UI.appHighLightColor,
+                  targetColor: Colors.white,
+                  textColor: Colors.white,
+                  contentLocation: ContentLocation.below,
+                  pulseDuration: Duration(milliseconds: 300),
+                  tapTarget: GestureDetector(
+                    onDoubleTap: () async {
+                      no > 0 ? setState(() => no -= 2) : null;
+                      if (no == 0) {
+                        await FeatureDiscovery.completeCurrentStep(context);
+                      }
+                    },
+                  ),
+                  child: Container(),
                 ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: size.height * 0.2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DescribedFeatureOverlay(
-                    featureId: 'single_tap_id',
-                    title: Text('Single Tap'),
-                    description: Text('Tap once to increase th no. by 1'),
-                    backgroundColor: UI.appErrorColor,
-                    targetColor: Colors.white,
-                    textColor: Colors.white,
-                    contentLocation: ContentLocation.below,
-                    pulseDuration: Duration(seconds: 1),
-                    tapTarget: GestureDetector(
-                      onTap: () async {
-                        setState(() => no += 1);
-                        await FeatureDiscovery.completeCurrentStep(context);
-                      },
-                    ),
-                    child: Container(),
+                DescribedFeatureOverlay(
+                  barrierDismissible: false,
+                  backgroundDismissible: false,
+                  featureId: 'good_luck_id',
+                  title: Text('Good Luck'),
+                  description: Text(
+                      'Sign In \nand \ncomplete more challenges like this'),
+                  backgroundColor: UI.appButtonColor,
+                  targetColor: Colors.white,
+                  textColor: Colors.white,
+                  contentLocation: ContentLocation.below,
+                  pulseDuration: Duration(seconds: 700),
+                  overflowMode: OverflowMode.clipContent,
+                  tapTarget: GestureDetector(
+                    onTap: () async {
+                      await FeatureDiscovery.completeCurrentStep(context);
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                    },
                   ),
-                  DescribedFeatureOverlay(
-                    featureId: 'double_tap_id',
-                    title: Text('Double Tap'),
-                    description: Text('Tap Twice to decrease the no. by 2'),
-                    backgroundColor: UI.appHighLightColor,
-                    targetColor: Colors.white,
-                    textColor: Colors.white,
-                    contentLocation: ContentLocation.below,
-                    pulseDuration: Duration(milliseconds: 300),
-                    tapTarget: GestureDetector(
-                      onDoubleTap: () async {
-                        setState(() => no -= 2);
-                        if (no == 0) {
-                          await FeatureDiscovery.completeCurrentStep(context);
-                        }
-                      },
-                    ),
-                    child: Container(),
-                  ),
-                  DescribedFeatureOverlay(
-                    featureId: 'good_luck_id',
-                    title: Text('Good Luck'),
-                    description: Text(
-                        'Sign In \nand \ncomplete more challenges like this'),
-                    backgroundColor: UI.appButtonColor,
-                    targetColor: Colors.white,
-                    textColor: Colors.white,
-                    contentLocation: ContentLocation.below,
-                    pulseDuration: Duration(seconds: 700),
-                    overflowMode: OverflowMode.clipContent,
-                    tapTarget: GestureDetector(
-                      onTap: () async {
-                        await FeatureDiscovery.completeCurrentStep(context);
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => LoginPage(),
-                          ),
-                        );
-                      },
-                    ),
-                    child: Container(),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                  child: Container(),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
