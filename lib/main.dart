@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wally_the_stupid/Database/staticData.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Authentication/login.dart';
 import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FeatureDiscovery(
       child: GetMaterialApp(
-        title: 'Wally - The Stupid',
+        title: StaticData.appName,
         theme: appLightTheme(),
         darkTheme: appDarkTheme(),
         debugShowCheckedModeBanner: false,

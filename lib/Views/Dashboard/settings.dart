@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
+import 'package:wally_the_stupid/Views/Dashboard/about.dart';
 
 class SettingsPage extends StatefulWidget {
   final PackageInfo? deviceInfo;
@@ -33,29 +35,60 @@ class _SettingsPageState extends State<SettingsPage> {
               'App Version: ${widget.deviceInfo?.version}',
               style: UI.appText,
             ),
-            Divider(
-              color: UI.appIconColor,
-            ),
-            Text(
-              'About App',
-              style: UI.appText,
+            SizedBox(
+              height: size.height * 0.01,
             ),
             Divider(
               color: UI.appIconColor,
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            GestureDetector(
+              onTap: () => Get.to(
+                () => AboutPage(
+                  packageInfo: widget.deviceInfo,
+                ),
+              ),
+              child: Text(
+                'About App',
+                style: UI.appText,
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            Divider(
+              color: UI.appIconColor,
+            ),
+            SizedBox(
+              height: size.height * 0.01,
             ),
             Text(
               'Privacy Policy',
               style: UI.appText,
             ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
             Divider(
               color: UI.appIconColor,
+            ),
+            SizedBox(
+              height: size.height * 0.01,
             ),
             Text(
               'Sign Out',
               style: UI.appText,
             ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
             Divider(
               color: UI.appIconColor,
+            ),
+            SizedBox(
+              height: size.height * 0.05,
             ),
           ],
         ),
