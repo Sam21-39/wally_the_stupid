@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 
 class SettingsPage extends StatefulWidget {
-  final deviceInfo;
+  final PackageInfo? deviceInfo;
   const SettingsPage({
     Key? key,
     this.deviceInfo,
@@ -13,8 +14,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  String deviceVersion = '1.0.0';
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -25,9 +24,13 @@ class _SettingsPageState extends State<SettingsPage> {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: size.height * 0.05,
+            ),
             Text(
-              deviceVersion,
+              'App Version: ${widget.deviceInfo?.version}',
               style: UI.appText,
             ),
             Divider(

@@ -6,6 +6,7 @@ import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Dashboard/home.dart';
 import 'package:wally_the_stupid/Views/Dashboard/leaderboard.dart';
 import 'package:wally_the_stupid/Views/Dashboard/settings.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class DashBoardPage extends StatefulWidget {
   const DashBoardPage({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class DashBoardPage extends StatefulWidget {
 class _DashBoardPageState extends State<DashBoardPage> {
   int _currentIndex = 0;
   final db = DataHandler.dataInstance;
+  var packageInfo;
 
   @override
   void initState() {
@@ -59,7 +61,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
         );
       case 3:
-        return SettingsPage();
+        return SettingsPage(
+          deviceInfo: packageInfo,
+        );
     }
     return Container();
   }
@@ -94,4 +98,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
         ],
       );
+
+  getDeviceInfo() async {
+    packageInfo = await PackageInfo.fromPlatform();
+    setState(() {});
+  }
 }

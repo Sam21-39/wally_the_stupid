@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
