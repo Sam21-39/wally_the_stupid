@@ -47,14 +47,29 @@ class DataHandler {
     bool merge = false,
   }) async {
     try {
+      final List resultList = await _getAllAnswers();
+      if (resultList.any((element) => element['qid'] == qid)) {
+        final index =
+            resultList.indexWhere((element) => element['time'] > time);
+        resultList.removeAt(index);
+        resultList.insert(
+          index,
+          {
+            'time': time,
+            'qid': qid,
+          },
+        );
+      } else {
+        resultList.add(
+          {
+            'time': time,
+            'qid': qid,
+          },
+        );
+      }
       await firestore.collection('Answers').doc(auth.currentUser?.uid).set(
         {
-          'challenges': [
-            {
-              'time': time,
-              'qid': qid,
-            },
-          ],
+          'challenges': resultList,
         },
         SetOptions(merge: merge),
       );
@@ -62,6 +77,20 @@ class DataHandler {
     } catch (e) {
       print(e.toString());
       return e.toString();
+    }
+  }
+
+  Future _getAllAnswers() async {
+    try {
+      final result = await firestore
+          .collection('Answers')
+          .doc(auth.currentUser?.uid)
+          .get();
+
+      final resultList = (result.data() as Map)['challenges'];
+      return resultList;
+    } catch (e) {
+      return null;
     }
   }
 
