@@ -35,6 +35,7 @@ dependencies:
   google_sign_in: any
   firebase_storage: any
   cloud_firestore: any
+  firebase_crashlytics: any
   package_info_plus: any
   get: any
   
