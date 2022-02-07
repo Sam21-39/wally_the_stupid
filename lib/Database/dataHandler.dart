@@ -49,8 +49,7 @@ class DataHandler {
     try {
       final List resultList = await _getAllAnswers();
       if (resultList.any((element) => element['qid'] == qid)) {
-        final index =
-            resultList.indexWhere((element) => element['time'] > time);
+        final index = resultList.indexWhere((element) => element['qid'] == qid);
         resultList.removeAt(index);
         resultList.insert(
           index,
