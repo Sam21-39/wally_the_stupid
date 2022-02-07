@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                               }
                             });
                             return ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
+                              // physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: dataList.length,
                               itemBuilder: (context, index) => Padding(
