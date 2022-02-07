@@ -1,5 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:timezone/timezone.dart';
+import 'package:wally_the_stupid/Database/dataHandler.dart';
 import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 
 class LocalNotification {
@@ -23,19 +25,37 @@ class LocalNotification {
     );
   }
 
-  display() async {
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      'Update',
-      'LeaderBoard updated',
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          'cid_1',
-          'updateChannel',
-          playSound: true,
-        ),
-      ),
-    );
+  display() {
+    final location = getLocation('Asia/Kolkata');
+    flutterLocalNotificationsPlugin
+        .zonedSchedule(
+          0,
+          'Update',
+          'LeaderBoard updated',
+          TZDateTime(
+            location,
+            TZDateTime.now(location).year,
+            TZDateTime.now(location).month,
+            TZDateTime.now(location).day + 1,
+            0,
+            0,
+          ),
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              'cid_1',
+              'updateChannel',
+              playSound: true,
+              enableLights: true,
+              enableVibration: true,
+            ),
+          ),
+          androidAllowWhileIdle: true,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.wallClockTime,
+        )
+        .then(
+          (value) async => await DataHandler.dataInstance.clearLeaderboard(),
+        );
   }
 
   void selectNotification(String? payload) async {

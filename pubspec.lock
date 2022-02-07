@@ -92,13 +92,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
-  cron:
-    dependency: "direct main"
-    description:
-      name: cron
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   crypto:
     dependency: transitive
     description:
@@ -617,7 +610,7 @@ packages:
     source: hosted
     version: "0.4.8"
   timezone:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: timezone
       url: "https://pub.dartlang.org"
@@ -700,13 +693,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.11"
-  workmanager:
-    dependency: "direct main"
-    description:
-      name: workmanager
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.1"
   xdg_directories:
     dependency: transitive
     description:

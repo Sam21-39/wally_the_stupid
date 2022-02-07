@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wally_the_stupid/Ads/Adhelper.dart';
+import 'package:wally_the_stupid/Database/dataHandler.dart';
 import 'package:wally_the_stupid/Model/challenge.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/TapPage/tap.dart';
@@ -257,13 +258,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   getTimeFromLeaderBoard() async {
-    final data = await FirebaseFirestore.instance
-        .collection("Leaderboard")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .get();
-
-    final lead = (data.data() as Map)['time'];
-
+    final lead = await DataHandler.dataInstance.getBestTime();
     //print((lead as Map)['time']);
     if (lead != 9999999) time = lead;
     setState(() {});

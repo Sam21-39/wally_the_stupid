@@ -25,9 +25,10 @@ dependencies:
   fluttertoast: any
   salomon_bottom_bar: any
   google_mobile_ads: any
-  workmanager: any
+  # workmanager: any
   flutter_local_notifications: any
-  cron: any
+  # cron: any
+  timezone: any
 
   firebase_core: any
   firebase_auth: any

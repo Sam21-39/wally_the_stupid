@@ -65,7 +65,7 @@ class DataHandler {
     }
   }
 
-  Future _getBestTime() async {
+  Future getBestTime() async {
     try {
       final result = await firestore
           .collection('Answers')
@@ -103,7 +103,7 @@ class DataHandler {
 
   Future updateLeaderBoard() async {
     try {
-      final timeFromAns = await _getBestTime();
+      final timeFromAns = await getBestTime();
       final timeFromLead = await _getBestTimeinLeaderboard();
 
       if (timeFromLead > timeFromAns) {
@@ -125,6 +125,22 @@ class DataHandler {
           'timestamp': Timestamp.now(),
         });
       }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future clearLeaderboard() async {
+    try {
+      await firestore.collection('Leaderboard').get().then(
+            (value) => value.docs.forEach((element) {
+              element.reference.update({
+                'time': 9999999,
+                'isActive': true,
+                'timestamp': Timestamp.now(),
+              });
+            }),
+          );
     } catch (e) {
       print(e.toString());
     }
