@@ -9,7 +9,11 @@ import 'package:wally_the_stupid/Views/Dashboard/settings.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class DashBoardPage extends StatefulWidget {
-  const DashBoardPage({Key? key}) : super(key: key);
+  final index;
+  const DashBoardPage({
+    Key? key,
+    this.index = 0,
+  }) : super(key: key);
 
   @override
   _DashBoardPageState createState() => _DashBoardPageState();
@@ -25,6 +29,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
     getDeviceInfo();
     db.updateLeaderBoard();
     super.initState();
+    _currentIndex = widget.index;
+    setState(() {});
   }
 
   @override

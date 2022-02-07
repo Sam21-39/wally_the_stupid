@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cron/cron.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,16 +9,39 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/Database/staticData.dart';
+import 'package:wally_the_stupid/Services/local_notification.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Authentication/login.dart';
 import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:wally_the_stupid/Views/Guide/guide.dart';
+import 'package:workmanager/workmanager.dart';
+
+void callBackDispacther() {
+  Workmanager().executeTask((taskName, inputData) {
+    Cron().schedule(
+      Schedule.parse('*/5 * * * *'),
+      () => LocalNotification.instance.display(),
+    );
+    return Future.value(true);
+  });
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await MobileAds.instance.initialize();
+  await LocalNotification.instance.initialize();
+  Workmanager().initialize(
+    callBackDispacther,
+    isInDebugMode: true,
+  );
+  Workmanager().registerPeriodicTask(
+    '_localNotification',
+    'updateLeaderboard',
+    frequency: Duration(hours: 1),
+  );
+
   await PlatformViewsService.synchronizeToNativeViewHierarchy(false);
   runApp(MyApp());
 }
