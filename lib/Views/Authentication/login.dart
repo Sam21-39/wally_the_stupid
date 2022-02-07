@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   if (result.contains('error') ||
                       result.contains('exeception') ||
+                      result.contains('sign_in_failed') ||
                       result.contains('accessToken != null') ||
                       result.contains('idToken != null')) {
                     Fluttertoast.showToast(
