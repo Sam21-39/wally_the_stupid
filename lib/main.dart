@@ -21,7 +21,7 @@ void main() async {
   await Firebase.initializeApp();
   await MobileAds.instance.initialize();
   await LocalNotification.instance.initialize();
-  await PlatformViewsService.synchronizeToNativeViewHierarchy(false);
+  // await PlatformViewsService.synchronizeToNativeViewHierarchy(false);
   tz.initializeTimeZones();
   LocalNotification.instance.display();
   runApp(MyApp());
