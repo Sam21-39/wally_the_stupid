@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/Auth/auth.dart';
@@ -30,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Sign In \nand \nDo more Challenges!!!',
+              'Like the Game? \n\nIf Yes, Then\n\n Sign In \nand \nDo more Challenges!!!',
               style: UI.appText.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w800,
@@ -49,24 +48,24 @@ class _LoginPageState extends State<LoginPage> {
                   final auth = Auth.instance;
                   final db = DataHandler.dataInstance;
                   final result = await auth.signInWithGoogle();
-
-                  if (result.contains('error') ||
-                      result.contains('exeception') ||
-                      result.contains('sign_in_failed') ||
-                      result.contains('accessToken != null') ||
-                      result.contains('idToken != null')) {
-                    Fluttertoast.showToast(
-                      msg: 'Some error occured. Try again later',
-                    );
-                  } else {
+                  print(result);
+                  if (result != false) {
                     final sp = await SharedPreferences.getInstance();
                     sp.setBool('isLogged', true);
                     db.initiateUserCreation();
-                    Get.offUntil(
-                      MaterialPageRoute(
-                        builder: (context) => DashBoardPage(),
+                    Get.off(
+                      () => DashBoardPage(
+                        index: 0,
                       ),
-                      (route) => false,
+                      popGesture: false,
+                    );
+                    // Fluttertoast.showToast(
+                    //   msg: 'Some error occured. Try again later',
+                    // );
+                  } else {
+                    Get.snackbar(
+                      'Error',
+                      'Some Error occured. Try again later!',
                     );
                   }
                 },

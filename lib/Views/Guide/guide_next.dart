@@ -1,21 +1,23 @@
 import 'dart:async';
 
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:wally_the_stupid/UI/ui.dart';
-import 'package:wally_the_stupid/Views/Guide/guide_next.dart';
+import 'package:get/get.dart';
+import 'package:wally_the_stupid/Views/Authentication/login.dart';
 
-class GuidePage extends StatefulWidget {
-  const GuidePage({Key? key}) : super(key: key);
+import '../../UI/ui.dart';
+
+class GuideNext extends StatefulWidget {
+  const GuideNext({Key? key}) : super(key: key);
 
   @override
-  _GuidePageState createState() => _GuidePageState();
+  _GuideNextState createState() => _GuideNextState();
 }
 
-class _GuidePageState extends State<GuidePage> {
-  var no = 5.obs;
+class _GuideNextState extends State<GuideNext> {
+  var left = 'D'.codeUnitAt(0).obs;
+  var rest = 'ALLY';
+  var concat = ''.obs;
   var time = 0.obs;
-  var isSingleTapped = false.obs;
   var isDone = false.obs;
 
   double boxSize = 100;
@@ -29,7 +31,9 @@ class _GuidePageState extends State<GuidePage> {
       (value) => Timer.periodic(
         Duration(milliseconds: 1000),
         (timer) {
-          if (no.value > 0) time.value += 1;
+          concat.value = String.fromCharCode(left.value) + rest;
+
+          if (concat != 'WALLY') time.value += 1;
         },
       ),
     );
@@ -52,7 +56,7 @@ class _GuidePageState extends State<GuidePage> {
                 height: size.height * 0.06,
               ),
               Text(
-                'Let\'s try to make the no. to 0 by tapping the screen',
+                'Let\'s try to make the word \"WALLY\" by tapping the screen',
                 style: UI.appText.copyWith(
                   fontSize: 30.0,
                   fontWeight: FontWeight.w900,
@@ -63,13 +67,26 @@ class _GuidePageState extends State<GuidePage> {
                 height: size.height * 0.1,
               ),
               Obx(
-                () => Text(
-                  no.value.toString(),
-                  style: UI.appText.copyWith(
-                    fontSize: 64.0,
-                    fontWeight: FontWeight.w900,
-                  ),
-                  textAlign: TextAlign.center,
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      String.fromCharCode(left.value),
+                      style: UI.appText.copyWith(
+                        fontSize: 64.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      rest,
+                      style: UI.appText.copyWith(
+                        fontSize: 64.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -89,24 +106,16 @@ class _GuidePageState extends State<GuidePage> {
                 height: size.height * 0.05,
               ),
               Obx(
-                () => isSingleTapped.value
-                    ? isDone.value
-                        ? Text(
-                            'Nice! you took ${time.value} seconds',
-                            style: UI.appText.copyWith(
-                              fontSize: 24,
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        : Text(
-                            'Double Tap the green button untill the no. becomes zero (0)',
-                            style: UI.appText.copyWith(
-                              fontSize: 24,
-                            ),
-                            textAlign: TextAlign.center,
-                          )
+                () => concat.value == 'WALLY'
+                    ? Text(
+                        'Nice! you took ${time.value} seconds',
+                        style: UI.appText.copyWith(
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
                     : Text(
-                        'Single Tap the green button',
+                        'Change the leftmost \"D\" to \"W\" by Double/Single Tapping',
                         style: UI.appText.copyWith(
                           fontSize: 24,
                         ),
@@ -117,18 +126,18 @@ class _GuidePageState extends State<GuidePage> {
                 height: size.height * 0.1,
               ),
               Obx(
-                () => isDone.value
+                () => concat.value == "WALLY"
                     ? MaterialButton(
                         disabledColor: UI.appButtonColor.withOpacity(0.45),
                         minWidth: size.width * 0.8,
                         onPressed: () => Get.off(
-                          () => GuideNext(),
+                          () => LoginPage(),
                           popGesture: false,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
-                            'Next',
+                            'Done',
                             style: UI.appText.copyWith(
                               color: Colors.white,
                             ),
@@ -142,20 +151,22 @@ class _GuidePageState extends State<GuidePage> {
                         ),
                       )
                     : GestureDetector(
-                        onTap: isSingleTapped.value
-                            ? null
-                            : () {
-                                no.value += 1;
-                                isSingleTapped.value = true;
-                              },
-                        onDoubleTap: isSingleTapped.value
-                            ? () {
-                                if (no.value >= 2) {
-                                  no.value -= 2;
-                                  if (no.value == 0) isDone.value = true;
-                                }
-                              }
-                            : null,
+                        onTap: () {
+                          if (left.value == 90) {
+                            left.value = 65;
+                          } else {
+                            left.value += 1;
+                          }
+                        },
+                        onDoubleTap: () {
+                          if (left.value == 66) {
+                            left.value = 90;
+                          } else if (left.value == 65) {
+                            left.value = 89;
+                          } else {
+                            left.value -= 2;
+                          }
+                        },
                         child: Container(
                           height: boxSize,
                           width: boxSize,

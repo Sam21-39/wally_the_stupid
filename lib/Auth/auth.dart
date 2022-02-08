@@ -24,7 +24,7 @@ class Auth {
       return result.user?.uid;
     } catch (e) {
       print(e.toString());
-      return e.toString();
+      return false;
     }
   }
 

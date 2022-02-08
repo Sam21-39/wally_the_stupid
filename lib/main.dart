@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wally_the_stupid/Database/staticData.dart';
 import 'package:wally_the_stupid/Services/local_notification.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
-import 'package:wally_the_stupid/Views/Authentication/login.dart';
+// import 'package:wally_the_stupid/Views/Authentication/login.dart';
 import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
 import 'package:wally_the_stupid/Views/Guide/guide.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -85,13 +85,14 @@ class _SplashState extends State<Splash> {
     ).then((value) async {
       final sp = await SharedPreferences.getInstance();
 
-      if (sp.getBool('isLogged') == null) {
+      if (sp.getBool('isLogged') == null || sp.getBool('isLogged') == false) {
         Get.off(() => GuidePage());
       } else if (sp.getBool('isLogged') == true) {
         Get.off(() => DashBoardPage());
-      } else {
-        Get.off(() => LoginPage());
       }
+      //else {
+      //   Get.off(() => LoginPage());
+      // }
     });
   }
 

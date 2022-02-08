@@ -29,7 +29,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
   @override
   void initState() {
     getDeviceInfo();
-    db.updateLeaderBoard();
     LocalNotification.instance.display();
     super.initState();
     _currentIndex = widget.index;
