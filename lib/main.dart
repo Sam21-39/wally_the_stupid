@@ -12,7 +12,6 @@ import 'package:wally_the_stupid/Services/local_notification.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Authentication/login.dart';
 import 'package:wally_the_stupid/Views/Dashboard/dashbaord.dart';
-import 'package:feature_discovery/feature_discovery.dart';
 import 'package:wally_the_stupid/Views/Guide/guide.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -23,7 +22,6 @@ void main() async {
   await LocalNotification.instance.initialize();
   // await PlatformViewsService.synchronizeToNativeViewHierarchy(false);
   tz.initializeTimeZones();
-  LocalNotification.instance.display();
   runApp(MyApp());
 }
 
@@ -34,15 +32,13 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return FeatureDiscovery(
-      child: GetMaterialApp(
-        title: StaticData.appName,
-        theme: appLightTheme(),
-        darkTheme: appDarkTheme(),
-        debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.system,
-        home: Splash(),
-      ),
+    return GetMaterialApp(
+      title: StaticData.appName,
+      theme: appLightTheme(),
+      darkTheme: appDarkTheme(),
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
+      home: Splash(),
     );
   }
 
@@ -75,9 +71,15 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  var opacity = 0.0.obs;
   @override
   void initState() {
     super.initState();
+    Future.delayed(
+      Duration(milliseconds: 700),
+    ).then(
+      (value) => opacity.value = 1.0,
+    );
     Future.delayed(
       Duration(seconds: 6),
     ).then((value) async {
@@ -104,9 +106,17 @@ class _SplashState extends State<Splash> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/wally.png',
-              height: size.height * 0.16,
+            Obx(
+              () => AnimatedOpacity(
+                duration: Duration(
+                  milliseconds: 1200,
+                ),
+                opacity: opacity.value,
+                child: Image.asset(
+                  'assets/images/wally.png',
+                  height: size.height * 0.16,
+                ),
+              ),
             ),
             AnimatedTextKit(
               animatedTexts: [

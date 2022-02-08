@@ -12,22 +12,17 @@ dependencies:
   flutter:
     sdk: flutter
 
-  change_app_package_name: ^1.0.0 #use only when necessary
-
   cupertino_icons: ^1.0.4
+  
   animated_text_kit: any
-  feature_discovery: any
   flutter_launcher_icons: any
 
   shared_preferences: any
   url_launcher: any
-  path_provider: any
   fluttertoast: any
   salomon_bottom_bar: any
   google_mobile_ads: any
-  # workmanager: any
   flutter_local_notifications: any
-  # cron: any
   timezone: any
 
   firebase_core: any

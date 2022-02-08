@@ -8,6 +8,8 @@ import 'package:wally_the_stupid/Views/Dashboard/leaderboard.dart';
 import 'package:wally_the_stupid/Views/Dashboard/settings.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../../Services/local_notification.dart';
+
 class DashBoardPage extends StatefulWidget {
   final index;
   const DashBoardPage({
@@ -28,6 +30,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   void initState() {
     getDeviceInfo();
     db.updateLeaderBoard();
+    LocalNotification.instance.display();
     super.initState();
     _currentIndex = widget.index;
     setState(() {});
