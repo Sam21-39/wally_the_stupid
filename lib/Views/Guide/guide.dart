@@ -17,9 +17,12 @@ class _GuidePageState extends State<GuidePage> {
   var no = 5.obs;
   var time = 0.obs;
   var isSingleTapped = false.obs;
+  var isDone = false.obs;
+
   double boxSize = 100;
   int duration = 500;
   late Timer timer;
+
   @override
   void initState() {
     super.initState();
@@ -27,9 +30,7 @@ class _GuidePageState extends State<GuidePage> {
       (value) => Timer.periodic(
         Duration(milliseconds: 1000),
         (timer) {
-          if (no.value > 0) {
-            time.value += 1;
-          }
+          if (no.value > 0) time.value += 1;
         },
       ),
     );
@@ -90,31 +91,27 @@ class _GuidePageState extends State<GuidePage> {
               ),
               Obx(
                 () => isSingleTapped.value
-                    ? AnimatedTextKit(
-                        animatedTexts: [
-                          TypewriterAnimatedText(
-                            'Double Tap the green button untill the no. becomes O',
-                            textStyle: UI.appText.copyWith(
+                    ? isDone.value
+                        ? Text(
+                            'Nice! you took ${time.value} seconds',
+                            style: UI.appText.copyWith(
                               fontSize: 24,
                             ),
                             textAlign: TextAlign.center,
-                            speed: const Duration(milliseconds: 300),
                           )
-                        ],
-                      )
-                    : AnimatedTextKit(
-                        animatedTexts: [
-                          TypewriterAnimatedText(
-                            'Single Tap the green button',
-                            textStyle: UI.appText.copyWith(
+                        : Text(
+                            'Double Tap the green button untill the no. becomes zero (0)',
+                            style: UI.appText.copyWith(
                               fontSize: 24,
                             ),
                             textAlign: TextAlign.center,
-                            speed: const Duration(milliseconds: 300),
-                          ),
-                        ],
-                        totalRepeatCount: 1,
-                        pause: const Duration(milliseconds: 200),
+                          )
+                    : Text(
+                        'Single Tap the green button',
+                        style: UI.appText.copyWith(
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
               ),
               SizedBox(
@@ -132,8 +129,7 @@ class _GuidePageState extends State<GuidePage> {
                       ? () {
                           if (no.value >= 2) {
                             no.value -= 2;
-                          } else {
-                            timer.cancel();
+                            if (no.value == 0) isDone.value = true;
                           }
                         }
                       : null,
