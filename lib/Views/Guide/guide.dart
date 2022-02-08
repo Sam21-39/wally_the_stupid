@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
@@ -118,34 +117,55 @@ class _GuidePageState extends State<GuidePage> {
                 height: size.height * 0.1,
               ),
               Obx(
-                () => GestureDetector(
-                  onTap: isSingleTapped.value
-                      ? null
-                      : () {
-                          no.value += 1;
-                          isSingleTapped.value = true;
-                        },
-                  onDoubleTap: isSingleTapped.value
-                      ? () {
-                          if (no.value >= 2) {
-                            no.value -= 2;
-                            if (no.value == 0) isDone.value = true;
-                          }
-                        }
-                      : null,
-                  child: Container(
-                    height: boxSize,
-                    width: boxSize,
-                    child: Card(
-                      color: UI.appButtonColor,
-                      borderOnForeground: true,
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100),
+                () => isDone.value
+                    ? MaterialButton(
+                        disabledColor: UI.appButtonColor.withOpacity(0.45),
+                        minWidth: size.width * 0.8,
+                        onPressed: () => Get,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            'Next',
+                            style: UI.appText.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        animationDuration: Duration(milliseconds: 700),
+                        color: UI.appButtonColor,
+                        elevation: 6.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: isSingleTapped.value
+                            ? null
+                            : () {
+                                no.value += 1;
+                                isSingleTapped.value = true;
+                              },
+                        onDoubleTap: isSingleTapped.value
+                            ? () {
+                                if (no.value >= 2) {
+                                  no.value -= 2;
+                                  if (no.value == 0) isDone.value = true;
+                                }
+                              }
+                            : null,
+                        child: Container(
+                          height: boxSize,
+                          width: boxSize,
+                          child: Card(
+                            color: UI.appButtonColor,
+                            borderOnForeground: true,
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ),
             ],
           ),
