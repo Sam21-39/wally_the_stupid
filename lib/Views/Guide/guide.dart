@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
@@ -14,21 +15,23 @@ class GuidePage extends StatefulWidget {
 
 class _GuidePageState extends State<GuidePage> {
   var no = 5.obs;
+  var time = 0.obs;
+  var isSingleTapped = false.obs;
   double boxSize = 100;
-  var elevation = 2.obs;
-  var duration = 500;
+  int duration = 500;
+  late Timer timer;
   @override
   void initState() {
     super.initState();
-    Timer.periodic(
-      Duration(milliseconds: duration),
-      ((timer) {
-        if (timer.tick % 2 == 0) {
-          elevation.value -= 10;
-        } else {
-          elevation.value += 10;
-        }
-      }),
+    Future.delayed(Duration(milliseconds: 800)).then(
+      (value) => Timer.periodic(
+        Duration(milliseconds: 1000),
+        (timer) {
+          if (no.value > 0) {
+            time.value += 1;
+          }
+        },
+      ),
     );
   }
 
@@ -41,62 +44,115 @@ class _GuidePageState extends State<GuidePage> {
         width: size.width,
         height: size.height,
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            SizedBox(
-              height: size.height * 0.1,
-            ),
-            Text(
-              'Let\'s try to make the no. to 0 by tapping the screen',
-              style: UI.appText.copyWith(
-                fontSize: 30.0,
-                fontWeight: FontWeight.w900,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              SizedBox(
+                height: size.height * 0.06,
               ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: size.height * 0.1,
-            ),
-            Obx(
-              () => Text(
-                no.value.toString(),
+              Text(
+                'Let\'s try to make the no. to 0 by tapping the screen',
                 style: UI.appText.copyWith(
-                  fontSize: 64.0,
+                  fontSize: 30.0,
                   fontWeight: FontWeight.w900,
                 ),
                 textAlign: TextAlign.center,
               ),
-            ),
-            SizedBox(
-              height: size.height * 0.1,
-            ),
-            Obx(
-              () => GestureDetector(
-                onTap: no.value <= 5 ? () => no.value += 1 : null,
-                onDoubleTap: () {
-                  if (no.value >= 2) {
-                    no.value -= 2;
-                  }
-                },
-                child: AnimatedContainer(
-                  curve: Curves.bounceInOut,
-                  duration: Duration(
-                    milliseconds: duration,
+              SizedBox(
+                height: size.height * 0.1,
+              ),
+              Obx(
+                () => Text(
+                  no.value.toString(),
+                  style: UI.appText.copyWith(
+                    fontSize: 64.0,
+                    fontWeight: FontWeight.w900,
                   ),
-                  height: boxSize,
-                  width: boxSize,
-                  child: Card(
-                    color: UI.appButtonColor,
-                    borderOnForeground: true,
-                    elevation: elevation.value.toDouble(),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Obx(
+                () => Text(
+                  '${time.value} sec',
+                  style: UI.appText.copyWith(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              Obx(
+                () => isSingleTapped.value
+                    ? AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            'Double Tap the green button untill the no. becomes O',
+                            textStyle: UI.appText.copyWith(
+                              fontSize: 24,
+                            ),
+                            textAlign: TextAlign.center,
+                            speed: const Duration(milliseconds: 300),
+                          )
+                        ],
+                      )
+                    : AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            'Single Tap the green button',
+                            textStyle: UI.appText.copyWith(
+                              fontSize: 24,
+                            ),
+                            textAlign: TextAlign.center,
+                            speed: const Duration(milliseconds: 300),
+                          ),
+                        ],
+                        totalRepeatCount: 1,
+                        pause: const Duration(milliseconds: 200),
+                      ),
+              ),
+              SizedBox(
+                height: size.height * 0.1,
+              ),
+              Obx(
+                () => GestureDetector(
+                  onTap: isSingleTapped.value
+                      ? null
+                      : () {
+                          no.value += 1;
+                          isSingleTapped.value = true;
+                        },
+                  onDoubleTap: isSingleTapped.value
+                      ? () {
+                          if (no.value >= 2) {
+                            no.value -= 2;
+                          } else {
+                            timer.cancel();
+                          }
+                        }
+                      : null,
+                  child: Container(
+                    height: boxSize,
+                    width: boxSize,
+                    child: Card(
+                      color: UI.appButtonColor,
+                      borderOnForeground: true,
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
