@@ -76,7 +76,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Future.delayed(
-      Duration(milliseconds: 700),
+      Duration(milliseconds: 1000),
     ).then(
       (value) => opacity.value = 1.0,
     );
