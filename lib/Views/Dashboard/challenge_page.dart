@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wally_the_stupid/Views/TapPage/tap_char.dart';
 
 import '../../Model/challenge.dart';
 import '../../UI/ui.dart';
@@ -67,9 +68,13 @@ class _ChallengePageState extends State<ChallengePage> {
                         child: GestureDetector(
                           onTap: () {
                             Get.to(
-                              () => TapPage(
-                                challenge: dataList[index],
-                              ),
+                              () => dataList[index].category == 2
+                                  ? TapCharPage(
+                                      challenge: dataList[index],
+                                    )
+                                  : TapPage(
+                                      challenge: dataList[index],
+                                    ),
                             );
                           },
                           child: Container(

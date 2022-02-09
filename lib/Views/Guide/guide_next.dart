@@ -14,7 +14,7 @@ class GuideNext extends StatefulWidget {
 }
 
 class _GuideNextState extends State<GuideNext> {
-  var left = 'D'.codeUnitAt(0).obs;
+  var left = 'S'.codeUnitAt(0).obs;
   var rest = 'ALLY';
   var concat = ''.obs;
   var time = 0.obs;
@@ -115,7 +115,7 @@ class _GuideNextState extends State<GuideNext> {
                         textAlign: TextAlign.center,
                       )
                     : Text(
-                        'Change the leftmost \"D\" to \"W\" by Double/Single Tapping',
+                        'Change the leftmost \"S\" to \"W\" by Double/Single Tapping',
                         style: UI.appText.copyWith(
                           fontSize: 24,
                         ),
@@ -152,18 +152,12 @@ class _GuideNextState extends State<GuideNext> {
                       )
                     : GestureDetector(
                         onTap: () {
-                          if (left.value == 90) {
-                            left.value = 65;
-                          } else {
+                          if (left.value < 90) {
                             left.value += 1;
                           }
                         },
                         onDoubleTap: () {
-                          if (left.value == 66) {
-                            left.value = 90;
-                          } else if (left.value == 65) {
-                            left.value = 89;
-                          } else {
+                          if (left.value > 66) {
                             left.value -= 2;
                           }
                         },
