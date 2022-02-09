@@ -2,7 +2,7 @@ class Challenge {
   String? qid;
   String? prompt;
   dynamic start;
-  dynamic answer;
+  dynamic target;
   bool? isActive;
   int? category;
 
@@ -10,7 +10,7 @@ class Challenge {
     this.qid,
     this.prompt,
     this.start,
-    this.answer,
+    this.target,
     this.isActive,
     this.category,
   });

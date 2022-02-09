@@ -8,6 +8,7 @@ import 'package:wally_the_stupid/Ads/Adhelper.dart';
 import 'package:wally_the_stupid/Database/dataHandler.dart';
 import 'package:wally_the_stupid/Model/challenge.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
+import 'package:wally_the_stupid/Views/Dashboard/challenge_page.dart';
 import 'package:wally_the_stupid/Views/TapPage/tap.dart';
 
 class HomePage extends StatefulWidget {
@@ -64,98 +65,157 @@ class _HomePageState extends State<HomePage> {
       width: size.width,
       height: size.height,
       child: Column(
+        // mainAxisSize: MainAxisSize.max,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            child: ListView(
-              children: [
-                Column(
-                  children: [
-                    Divider(
-                      color: UI.appHighLightColor,
-                      thickness: 2.0,
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          width: size.width * 0.4,
-                          decoration: BoxDecoration(
-                            color: UI.appButtonColor,
-                            borderRadius: BorderRadius.circular(12.0),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 5,
-                                spreadRadius: 2,
-                                offset: Offset(0.9, 0.1),
-                                color: Colors.black.withOpacity(0.25),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                user?.displayName ?? '',
-                                style: UI.appText.copyWith(fontSize: 22),
-                              ),
-                              SizedBox(
-                                height: size.height * 0.01,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Icon(
-                                    CupertinoIcons.timer,
-                                    color: UI.appIconColor,
-                                  ),
-                                  Text(
-                                    '$time sec',
-                                    style: UI.appText.copyWith(fontSize: 20),
-                                    softWrap: true,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        CircleAvatar(
-                          radius: 60.0,
-                          backgroundColor: UI.appButtonColor,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.network(
-                              user?.photoURL ?? '',
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation(
-                                        UI.appHighLightColor),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
+          SizedBox(
+            height: size.height * 0.05,
+          ),
+          Column(
+            children: [
+              Divider(
+                color: UI.appHighLightColor,
+                thickness: 2.0,
+              ),
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    width: size.width * 0.4,
+                    decoration: BoxDecoration(
+                      color: UI.appButtonColor,
+                      borderRadius: BorderRadius.circular(12.0),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 5,
+                          spreadRadius: 2,
+                          offset: Offset(0.9, 0.1),
+                          color: Colors.black.withOpacity(0.25),
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: size.height * 0.01,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          user?.displayName ?? '',
+                          style: UI.appText.copyWith(fontSize: 22),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Icon(
+                              CupertinoIcons.timer,
+                              color: UI.appIconColor,
+                            ),
+                            Text(
+                              '$time sec',
+                              style: UI.appText.copyWith(fontSize: 20),
+                              softWrap: true,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    Divider(
-                      color: UI.appHighLightColor,
-                      thickness: 2.0,
+                  ),
+                  CircleAvatar(
+                    radius: 60.0,
+                    backgroundColor: UI.appButtonColor,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.network(
+                        user?.photoURL ?? '',
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation(UI.appHighLightColor),
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              Divider(
+                color: UI.appHighLightColor,
+                thickness: 2.0,
+              ),
+            ],
+          ),
+          Container(
+            height: size.height * 0.58,
+            // color: Colors.amber,
+
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  GestureDetector(
+                    onTap: () => Get.to(
+                      () => ChallengePage(
+                        category: 1,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Image.asset('assets/images/number.png'),
+                        SizedBox(width: size.width * 0.02),
+                        SizedBox(
+                          width: size.width * 0.55,
+                          child: Text(
+                            'Numerical Challenges',
+                            style: UI.appText,
+                            softWrap: true,
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  GestureDetector(
+                    onTap: () => Get.to(
+                      () => ChallengePage(
+                        category: 2,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Image.asset('assets/images/alphabet.png'),
+                        SizedBox(width: size.width * 0.02),
+                        SizedBox(
+                          width: size.width * 0.55,
+                          child: Text(
+                            'Alphabetical Challenges',
+                            style: UI.appText,
+                            softWrap: true,
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           isBannerAdReady

@@ -95,7 +95,7 @@ class _TapPageState extends State<TapPage> {
                 MaterialButton(
                   disabledColor: UI.appButtonColor.withOpacity(0.45),
                   minWidth: size.width * 0.8,
-                  onPressed: widget.challenge?.answer == no
+                  onPressed: widget.challenge?.target == no
                       ? () async {
                           final db = DataHandler.dataInstance;
                           timer.cancel();

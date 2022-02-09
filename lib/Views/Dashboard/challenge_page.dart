@@ -52,7 +52,7 @@ class _ChallengePageState extends State<ChallengePage> {
                       var challenge = Challenge();
                       challenge.qid = e.id;
                       challenge.prompt = e['prompt'];
-                      challenge.answer = e['answer'];
+                      challenge.target = e['target'];
                       challenge.isActive = e['isActive'];
                       challenge.start = e['start'];
                       challenge.category = e['category'];
