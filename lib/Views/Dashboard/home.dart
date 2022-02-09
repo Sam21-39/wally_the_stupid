@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wally_the_stupid/Ads/Adhelper.dart';
 import 'package:wally_the_stupid/Database/dataHandler.dart';
-import 'package:wally_the_stupid/Model/challenge.dart';
 import 'package:wally_the_stupid/UI/ui.dart';
 import 'package:wally_the_stupid/Views/Dashboard/challenge_page.dart';
-import 'package:wally_the_stupid/Views/TapPage/tap.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

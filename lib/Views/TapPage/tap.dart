@@ -20,21 +20,21 @@ class TapPage extends StatefulWidget {
 }
 
 class _TapPageState extends State<TapPage> {
-  num no = 0;
-  num time = 0;
+  var no = 0.obs;
+  var time = 0.obs;
+  var boxSize = 100.0;
   late Timer timer;
+
   @override
   void initState() {
     super.initState();
-    setState(() {
-      no = widget.challenge?.start as num;
-    });
+
+    no.value = widget.challenge?.start;
     Future.delayed(Duration(milliseconds: 800)).then(
       (value) => timer = Timer.periodic(
         Duration(milliseconds: 1000),
         (timer) {
-          time += 1;
-          setState(() {});
+          if (widget.challenge?.target != no.value) time.value += 1;
         },
       ),
     );
@@ -43,64 +43,108 @@ class _TapPageState extends State<TapPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: () => setState(() => no += 1),
-      onDoubleTap: () => setState(() => no -= 2),
-      child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: Container(
-          width: size.width,
-          height: size.height,
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: size.height * 0.1,
+
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: Container(
+        width: size.width,
+        height: size.height,
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              Text(
+                widget.challenge?.prompt ?? 'Challenge',
+                style: UI.appText.copyWith(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w900,
                 ),
-                Text(
-                  widget.challenge?.prompt ?? 'Challenge',
-                  style: UI.appText.copyWith(
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.w900,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: size.height * 0.1,
-                ),
-                Text(
-                  no.toString(),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: size.height * 0.1,
+              ),
+              Obx(
+                () => Text(
+                  no.value.toString(),
                   style: UI.appText.copyWith(
                     fontSize: 64.0,
                     fontWeight: FontWeight.w900,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
-                  height: size.height * 0.2,
-                ),
-                Text(
-                  '$time sec',
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              Obx(
+                () => Text(
+                  '${time.value} sec',
                   style: UI.appText.copyWith(
                     fontSize: 24.0,
                     fontWeight: FontWeight.w700,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
-                  height: size.height * 0.05,
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              GestureDetector(
+                onTap: () {
+                  no.value += 1;
+                },
+                onDoubleTap: () {
+                  no.value -= 2;
+                },
+                child: Container(
+                  height: boxSize,
+                  width: boxSize,
+                  child: Card(
+                    color: UI.appButtonColor,
+                    borderOnForeground: true,
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                  ),
                 ),
-                MaterialButton(
+              ),
+              SizedBox(height: size.height * 0.02),
+              Obx(
+                () => widget.challenge?.target == no.value
+                    ? Text(
+                        'Congrats! you\'ve completed in ${time.value} seconds',
+                        style: UI.appText.copyWith(
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    : Text(
+                        'Single/Double Tap the green button to Increase/Decrease the value',
+                        style: UI.appText.copyWith(
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              Obx(
+                () => MaterialButton(
                   disabledColor: UI.appButtonColor.withOpacity(0.45),
                   minWidth: size.width * 0.8,
-                  onPressed: widget.challenge?.target == no
+                  onPressed: widget.challenge?.target == no.value
                       ? () async {
                           final db = DataHandler.dataInstance;
                           timer.cancel();
                           final result = await db.addAnswer(
-                            time,
+                            time.value,
                             (widget.challenge?.qid as String),
                             merge: true,
                           );
@@ -136,8 +180,11 @@ class _TapPageState extends State<TapPage> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+            ],
           ),
         ),
       ),
