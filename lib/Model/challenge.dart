@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Challenge {
   String? qid;
   String? prompt;
-  num? start;
-  num? answer;
+  dynamic start;
+  dynamic answer;
   bool? isActive;
-  Timestamp? timestamp;
+  int? category;
 
   Challenge({
     this.qid,
@@ -14,6 +12,6 @@ class Challenge {
     this.start,
     this.answer,
     this.isActive,
-    this.timestamp,
+    this.category,
   });
 }
