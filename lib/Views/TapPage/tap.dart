@@ -118,7 +118,7 @@ class _TapPageState extends State<TapPage> {
               Obx(
                 () => widget.challenge?.target == no.value
                     ? Text(
-                        'Congrats! you\'ve completed in ${time.value} seconds',
+                        'Congrats! you\'ve completed it in ${time.value} seconds',
                         style: UI.appText.copyWith(
                           fontSize: 24,
                         ),
