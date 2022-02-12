@@ -56,6 +56,7 @@ class DataHandler {
           {
             'time': time,
             'qid': qid,
+            'timestamp': Timestamp.now(),
           },
         );
       } else {
@@ -63,9 +64,11 @@ class DataHandler {
           {
             'time': time,
             'qid': qid,
+            'timestamp': Timestamp.now(),
           },
         );
       }
+      print(resultList);
       await firestore.collection('Answers').doc(auth.currentUser?.uid).set(
         {
           'challenges': resultList,
@@ -89,7 +92,7 @@ class DataHandler {
       final resultList = (result.data() as Map)['challenges'];
       return resultList;
     } catch (e) {
-      return null;
+      return [];
     }
   }
 
@@ -102,13 +105,15 @@ class DataHandler {
 
       final resultList = (result.data() as Map)['challenges'];
       var time = 9999999;
+      Timestamp timestap = Timestamp.now();
       for (var item in resultList) {
-        if (item['time'] < time) time = item['time'];
+        if (item['time'] < time && timestap.compareTo(item['timestamp']) <= 1)
+          time = item['time'];
       }
       return time;
     } catch (e) {
       print(e.toString());
-      return e.toString();
+      return 9999999;
     }
   }
 
