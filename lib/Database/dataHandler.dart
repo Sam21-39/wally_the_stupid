@@ -20,7 +20,7 @@ class DataHandler {
         'timestamp': Timestamp.now(),
       });
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
   }
 
@@ -32,7 +32,7 @@ class DataHandler {
         'timestamp': Timestamp.now(),
       });
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
   }
 
@@ -68,7 +68,7 @@ class DataHandler {
           },
         );
       }
-      print(resultList);
+      // print(resultList);
       await firestore.collection('Answers').doc(auth.currentUser?.uid).set(
         {
           'challenges': resultList,
@@ -77,7 +77,7 @@ class DataHandler {
       );
       return 'done';
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       return e.toString();
     }
   }
@@ -112,7 +112,7 @@ class DataHandler {
       }
       return time;
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       return 9999999;
     }
   }
@@ -129,7 +129,7 @@ class DataHandler {
       final time = (lead as Map)['time'];
       return time;
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       return e.toString();
     }
   }
@@ -159,7 +159,7 @@ class DataHandler {
         });
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
   }
 
@@ -175,7 +175,7 @@ class DataHandler {
             }),
           );
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
   }
 }
