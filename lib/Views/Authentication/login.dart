@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                     final auth = Auth.instance;
                     final db = DataHandler.dataInstance;
                     final result = await auth.signInWithGoogle();
-                    // print(result);
+                    print(result);
 
                     if (result != false) {
                       final sp = await SharedPreferences.getInstance();
