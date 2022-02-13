@@ -90,6 +90,7 @@ class DataHandler {
           .get();
 
       final resultList = (result.data() as Map)['challenges'];
+      // print(resultList.length);
       return resultList;
     } catch (e) {
       return [];
@@ -107,7 +108,7 @@ class DataHandler {
       var time = 9999999;
       Timestamp timestap = Timestamp.now();
       for (var item in resultList) {
-        if (item['time'] < time && timestap.compareTo(item['timestamp']) < 1)
+        if (item['time'] < time && timestap.compareTo(item['timestamp']) > 0)
           time = item['time'];
       }
       return time;
@@ -167,15 +168,18 @@ class DataHandler {
     try {
       await firestore.collection('Leaderboard').get().then(
             (value) => value.docs.forEach((element) {
-              element.reference.update({
-                'time': 9999999,
-                'isActive': true,
-                'timestamp': Timestamp.now(),
-              });
+              final timeStamp = Timestamp.now();
+              if (timeStamp.compareTo(element['timestamp']) > 0) {
+                element.reference.update({
+                  'time': 9999999,
+                  'isActive': true,
+                  'timestamp': Timestamp.now(),
+                });
+              }
             }),
           );
     } catch (e) {
-      // print(e.toString());
+      print(e.toString());
     }
   }
 }

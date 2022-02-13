@@ -30,6 +30,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
     super.initState();
     _currentIndex = widget.index;
     setState(() {});
+    db.clearLeaderboard();
   }
 
   @override

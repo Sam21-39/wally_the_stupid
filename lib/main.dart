@@ -22,10 +22,8 @@ void main() async {
   await LocalNotification.instance.initialize();
   // await PlatformViewsService.synchronizeToNativeViewHierarchy(false);
   tz.initializeTimeZones();
-  SharedPreferences.getInstance().then((value) {
-    if (value.getBool('isLogged') != null || value.getBool('isLogged') != false)
-      LocalNotification.instance.display();
-  });
+
+  await LocalNotification.instance.display();
 
   runApp(MyApp());
 }
