@@ -18,9 +18,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late BannerAd _bannerAd;
 
-  bool isBannerAdReady = false;
+  var isBannerAdReady = false.obs;
   final user = FirebaseAuth.instance.currentUser;
-  num time = 0;
+  var time = 0.obs;
   // final db = DataHandler.dataInstance;
   @override
   void initState() {
@@ -34,13 +34,11 @@ class _HomePageState extends State<HomePage> {
       size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (_) {
-          setState(() {
-            isBannerAdReady = true;
-          });
+          isBannerAdReady.value = true;
         },
         onAdFailedToLoad: (ad, err) {
           print('Failed to load a banner ad: ${err.message}');
-          isBannerAdReady = false;
+          isBannerAdReady.value = false;
           ad.dispose();
         },
       ),
@@ -113,10 +111,12 @@ class _HomePageState extends State<HomePage> {
                               CupertinoIcons.timer,
                               color: UI.appIconColor,
                             ),
-                            Text(
-                              '$time sec',
-                              style: UI.appText.copyWith(fontSize: 20),
-                              softWrap: true,
+                            Obx(
+                              () => Text(
+                                '$time sec',
+                                style: UI.appText.copyWith(fontSize: 20),
+                                softWrap: true,
+                              ),
                             ),
                           ],
                         ),
@@ -215,16 +215,18 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          isBannerAdReady
-              ? Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: _bannerAd.size.width.toDouble(),
-                    height: _bannerAd.size.height.toDouble(),
-                    child: AdWidget(ad: _bannerAd),
-                  ),
-                )
-              : Container(),
+          Obx(
+            () => isBannerAdReady.value
+                ? Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: _bannerAd.size.width.toDouble(),
+                      height: _bannerAd.size.height.toDouble(),
+                      child: AdWidget(ad: _bannerAd),
+                    ),
+                  )
+                : Container(),
+          ),
         ],
       ),
     );
@@ -233,8 +235,7 @@ class _HomePageState extends State<HomePage> {
   getTimeFromLeaderBoard() async {
     final lead = await DataHandler.dataInstance.getBestTime();
     //print((lead as Map)['time']);
-    if (lead != 9999999) time = lead;
-    setState(() {});
+    if (lead != 9999999) time.value = lead;
   }
 
   // getTestData() async {
