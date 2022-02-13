@@ -106,9 +106,10 @@ class DataHandler {
 
       final resultList = (result.data() as Map)['challenges'];
       var time = 9999999;
-      Timestamp timestap = Timestamp.now();
+      final timestap = Timestamp.now().toDate().day;
       for (var item in resultList) {
-        if (item['time'] < time && timestap.compareTo(item['timestamp']) > 0)
+        if (item['time'] < time &&
+            timestap.compareTo(item['timestamp'].toDate().day) >= 0)
           time = item['time'];
       }
       return time;
@@ -164,20 +165,25 @@ class DataHandler {
     }
   }
 
-  Future clearLeaderboard() async {
+  Future clearScore() async {
     try {
-      await firestore.collection('Leaderboard').get().then(
-            (value) => value.docs.forEach((element) {
-              final timeStamp = Timestamp.now();
-              if (timeStamp.compareTo(element['timestamp']) > 0) {
-                element.reference.update({
-                  'time': 9999999,
-                  'isActive': true,
-                  'timestamp': Timestamp.now(),
-                });
-              }
-            }),
-          );
+      await firestore
+          .collection('Leaderboard')
+          .doc(auth.currentUser?.uid)
+          .get()
+          .then((element) {
+        final timeStamp = Timestamp.now().toDate().day;
+        final compareTime =
+            timeStamp.compareTo(element['timestamp'].toDate().day);
+        // print(compareTime);
+        if (compareTime > 0) {
+          element.reference.update({
+            'time': 9999999,
+            'isActive': true,
+            'timestamp': Timestamp.now(),
+          });
+        }
+      });
     } catch (e) {
       print(e.toString());
     }

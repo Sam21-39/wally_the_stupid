@@ -22,9 +22,7 @@ void main() async {
   await LocalNotification.instance.initialize();
   // await PlatformViewsService.synchronizeToNativeViewHierarchy(false);
   tz.initializeTimeZones();
-
   await LocalNotification.instance.display();
-
   runApp(MyApp());
 }
 
