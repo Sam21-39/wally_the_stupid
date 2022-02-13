@@ -107,7 +107,7 @@ class DataHandler {
       var time = 9999999;
       Timestamp timestap = Timestamp.now();
       for (var item in resultList) {
-        if (item['time'] < time && timestap.compareTo(item['timestamp']) <= 1)
+        if (item['time'] < time && timestap.compareTo(item['timestamp']) < 1)
           time = item['time'];
       }
       return time;
